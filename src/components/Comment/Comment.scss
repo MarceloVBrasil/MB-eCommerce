@@ -1,0 +1,35 @@
+@use '../../styles/partials/fonts' as *;
+@use '../../styles/partials/colors' as *;
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid hsl(0, 0%, 88%);
+    min-width: 20rem;
+
+    &-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        &__author {
+            font-weight: 700;
+            color: black;
+            justify-self: flex-start;
+            width: 50%;
+        }
+
+        &__date {
+            color: $Gray;
+            width: 50%;
+            text-align: right;
+        }
+
+        &__message {
+            color: black;
+        }
+    }
+}

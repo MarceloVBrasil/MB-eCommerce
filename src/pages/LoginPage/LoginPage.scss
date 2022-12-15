@@ -1,0 +1,9 @@
+@use '../../styles/partials/colors' as *;
+
+.login-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+     filter: drop-shadow(0.2rem 0.2rem 0.5rem $Cloud);
+     min-height: 80vh;
+}

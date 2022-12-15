@@ -1,0 +1,72 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/fonts" as *;
+@use "../../styles/partials/mixins" as *;
+
+.cart-product {
+background-color: white;
+    display: flex;
+    min-width: 20rem;
+    max-height: 20rem;
+    color: $Graphite;
+    border-radius: 0.25rem;
+    position: relative;
+    padding-bottom: 3.0rem;
+
+    @include Tablet {
+        min-width: 35rem;
+    }
+
+    @include Desktop {
+        min-width: 40rem;
+    }
+
+
+    &-section {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Titillium Web', open-sans, sans-serif;
+        padding: 0.5rem;
+        width: 50%;
+
+        &:first-child {
+            margin: 0.5rem 0;
+            border-right: 1px solid $Cloud;
+        }
+
+        &:nth-child(2) {
+            margin: 0.5rem 0;
+        }
+        
+        &__title {
+            font-size: 1.1rem;
+            text-transform: capitalize;
+            margin-bottom: 1.5rem;
+            font-family: inherit;
+        }
+
+        &__image {
+            max-width: 7rem;
+        }
+
+        &__description {
+           white-space: pre-wrap;
+           line-height: 1.75rem;
+        }
+    }
+
+    &-buttons {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: flex-end;
+        background-color: $LightGray;
+        padding: 0.5rem;
+        width: 100%;
+        column-gap: 0.5rem;
+
+        @include Desktop {
+            justify-content: flex-end;
+
+        }
+    }
+}

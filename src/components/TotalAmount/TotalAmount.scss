@@ -1,0 +1,39 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/fonts" as *;
+@use "../../styles/partials/mixins" as *;
+
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    min-width: 20rem;
+    margin-bottom: 2rem;
+
+    @include Tablet {
+        min-width: 35rem;
+    }
+
+    @include Desktop {
+        min-width: 40rem;
+    }
+
+    &__cost {
+        font-family: 'Titillium Web';
+    }
+
+}
+
+.amount__error {
+    color: red;
+    font-size: 0.7rem;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+
+    & > span {
+        color: white;
+        text-align: center;
+        background-color: red;
+        border-radius: 50%;
+        padding: 0 0.30rem;
+        margin-right: 0.2rem;
+    }
+}

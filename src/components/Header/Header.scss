@@ -1,0 +1,35 @@
+@use '../../styles/partials/colors' as *;
+
+.header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem 0 0;
+    background-color: rgb(12, 29, 54);
+    border-bottom: 1px solid $Gray;
+    margin-bottom: 2rem;
+
+    &__logo {
+        width: 4rem;
+    }
+
+    &-links {
+        display: flex;
+        column-gap: 1.0rem;
+
+        &__link {
+            color: $GreenishBlue;
+            cursor: pointer;
+            width: auto;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &__greeting {
+            color: $GreenishBlue;
+        }
+    }
+}

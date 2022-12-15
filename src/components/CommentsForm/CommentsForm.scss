@@ -1,0 +1,25 @@
+@use '../../styles/partials/colors' as *;
+@use '../../styles/partials/fonts' as *;
+@use '../../styles/partials/mixins' as *;
+
+.comments-form {
+    display: flex;
+    flex-direction: column;
+    min-width: 20rem;
+    border-bottom: 2px solid hsl(0, 0%, 88%);
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+
+    @include Tablet {
+        min-width: 35rem;
+    }
+
+    @include Desktop {
+        min-width: 40rem;
+    }
+
+    &-button {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,49 @@
+@use '../../styles/partials/colors' as *;
+@use '../../styles/partials/fonts' as *;
+
+.textarea {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+    margin-bottom: 0.75rem;
+
+    &__label {
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: capitalize;
+        font-family: "Titillium Web", open-sans, sans-serif;
+    }
+
+    &__input {
+        width: 100%;
+        border-radius: 0.25rem;
+        border: 1px solid $LightGray;
+        outline: none;
+        padding: 1rem ;
+        min-height: 7rem;
+        resize: none;
+
+        &::placeholder {
+            margin-top: 1rem;
+            font-size: 0.8125rem;
+            text-transform: capitalize;
+        }
+
+        &:focus {
+            outline: 1px solid $Indigo;
+        }
+    }
+
+    &__error {
+        color: red;
+        font-size: 0.7rem;
+        text-transform: capitalize;
+
+        & > span {
+            color: white;
+            background-color: red;
+            border-radius: 50%;
+            padding: 0 0.30rem;
+        }
+    }
+}

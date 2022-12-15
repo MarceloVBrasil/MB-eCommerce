@@ -1,0 +1,13 @@
+@use '../../styles/partials/mixins' as *;
+
+.comment-list {
+    max-width: 20rem;
+
+    @include Tablet {
+        min-width: 35rem;
+    }
+
+    @include Desktop {
+        min-width: 40rem;
+    }
+}

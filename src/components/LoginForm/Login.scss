@@ -1,0 +1,46 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/fonts" as *;
+@use "../../styles/partials/mixins" as *;
+
+.login-form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-width: 20rem;
+    min-height: 17rem;
+    color: $Graphite;
+    border-radius: 0.25rem;
+    position: relative;
+    
+    @include Tablet {
+        min-width: 35rem;
+    }
+
+    @include Desktop {
+        min-width: 50rem;
+    }
+    
+    &-section {
+        font-family: 'Titillium Web', open-sans, sans-serif;
+        padding: 0.5rem;        
+    }
+
+
+    &__title {
+        font-size: 1.5rem;
+        text-transform: capitalize;
+        margin-bottom: 1.5rem;
+        font-family: inherit;
+    }
+
+    &-buttons {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: flex-end;
+        background-color: $LightGray;
+        padding: 0.5rem;
+        width: 100%;
+        column-gap: 0.5rem;
+    }
+}

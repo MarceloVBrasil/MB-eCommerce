@@ -1,0 +1,38 @@
+@use '../../styles/partials/colors' as *;
+@use '../../styles/partials/fonts' as *;
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+     margin-bottom: 0.75rem;
+
+    &__label {
+        font-family: 'Titillium Web';
+        text-transform: capitalize;
+        font-size: 0.8125rem;
+    }
+
+    &__options {
+        border: 1px solid $LightGray;
+        border-radius: 50rem;
+        font-size: 0.8125rem;
+
+        &:focus {
+            outline: 1px solid $Indigo;
+        }
+    }
+
+     &__error {
+        color: red;
+        font-size: 0.7rem;
+        text-transform: capitalize;
+
+        & > span {
+            color: white;
+            background-color: red;
+            border-radius: 50%;
+            padding: 0 0.30rem;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-grow: 1;
+  font-size: 0.6875rem;
+  font-family: 'Titillium Web';
+  
+  @include Tablet {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+    }
+    
+    a {
+        font: inherit;
+        margin-left: 0.1rem;
+        cursor: pointer;
+  }
+}

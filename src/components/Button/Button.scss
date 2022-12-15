@@ -1,0 +1,33 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/fonts" as *;
+@use "../../styles/partials/mixins" as *;
+
+.button {
+    width: 50%;
+    text-transform: capitalize;
+    border-radius: 50rem;
+    padding: 0.3rem 0;
+    
+    &:not([disabled]) {
+        cursor: pointer;
+    }
+
+    @include Desktop {
+        width: auto;
+        padding: 0.3rem 1.5rem;
+    }
+
+    &__cancel {
+        background-color: white;
+    }
+
+    &__action {
+        background-color: $Indigo;
+        color: white;
+        border: none;
+
+        &:hover:not([disabled]) {
+            background-color: $DarkIndigo;
+        }
+    }
+}

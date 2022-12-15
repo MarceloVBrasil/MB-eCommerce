@@ -1,0 +1,36 @@
+@use '../../styles/partials/colors' as *;
+
+.product {
+    max-width: 20rem;
+    position: relative;
+     border: 1px solid $Cloud;
+    filter: drop-shadow(0.2rem 0.2rem 0.5rem $Cloud);
+    border-radius: 0.25rem;
+
+    &__image {
+        width: 20rem;
+        height: 18rem;
+        margin-bottom: 3rem;
+    }
+
+    &-info {
+        background-color: $Light;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0.5rem 0.3rem;
+
+        &__name {
+            font-weight: 400;
+            display: inline;
+        }
+
+        &__price {
+            font-weight: 700;
+            display: inline;
+        }
+    }
+}

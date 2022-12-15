@@ -1,0 +1,13 @@
+@use './breakpoints' as *;
+
+@mixin Tablet {
+    @media screen and (min-width: $Tablet) {
+        @content;
+    }
+}
+
+@mixin Desktop {
+    @media screen and (min-width: $Desktop) {
+        @content;
+    }
+}
