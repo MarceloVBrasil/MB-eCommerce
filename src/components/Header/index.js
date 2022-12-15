@@ -7,7 +7,6 @@ import { useUser } from "../../contexts/UserProvider";
 
 export default function Header() {
   const { isLoggedIn, logOut, user } = useUser()
-
   return (
     <div className="header">
       <NavLink to="/">
@@ -20,6 +19,8 @@ export default function Header() {
         <NavLink to="/login">
           <p className="header-links__link">Login</p>
         </NavLink>
+        <h1>{ process.env.SERVER_URL}</h1>
+        <h1>oi</h1>
       </div>}
       {
         isLoggedIn &&

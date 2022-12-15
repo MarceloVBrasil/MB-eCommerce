@@ -23,6 +23,7 @@ export default function ProductList() {
   async function getAllProducts() {
     try {
       const response = await axiosInstance.get("/products");
+      console.log(process.env.SERVER_URL)
       setProducts(response.data);
     } catch (error) {
       alert(error);
