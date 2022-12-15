@@ -20,7 +20,6 @@ export default function Header() {
           <p className="header-links__link">Login</p>
         </NavLink>
         <h1>{ process.env.SERVER_URL}</h1>
-        <h1>oi</h1>
       </div>}
       {
         isLoggedIn &&

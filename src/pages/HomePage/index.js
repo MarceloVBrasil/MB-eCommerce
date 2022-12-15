@@ -24,7 +24,6 @@ export default function HomePage() {
   return (
     <div className="homepage">
       {paymentStatus === "pending" && <div className="homepage-payment-success homepage-payment-pending">
-        {/* <p className="homepage-payment-success__close-button" onClick={() => setPaymentStatus("")}>&times;</p> */}
         <PendingIcon className="homepage-payment-success__icon" />
         <p className="homepage-payment-success__text">Order Pending</p>
       </div>}
