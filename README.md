@@ -28,15 +28,22 @@ with a payment and invoice system.
 ## Installation
 
 Install my-project with:
-- npm
+- npm i
 - create a database called capstone
     
 ## How to Run
 
+### Development Mode
 Type the following commands:
 - npm run migrate
 - npm run seed
 - npm run rollback is set if necessary
+- in order for the payment to be successful, use the card number  4242 4242 4242 4242
+- The postal code follows the canadian pattern (e.g. X0X-0X0)
+
+### Production Mode
+URL: https://mbecommerce.vercel.app/
+
 ## API Reference
 
 ### STRIPE API
