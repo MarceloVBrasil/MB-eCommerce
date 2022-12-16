@@ -13,7 +13,7 @@ export default function TotalAmount() {
     <div className='amount'>
         {error && <p className='amount__error'><span>! </span> {error}</p>}
         <div className='total-amount'>
-          <p className='total-amount__cost'>Total: ${totalAmount}</p>
+          <p className='total-amount__cost'>Total: {priceTag(totalAmount)}</p>
           <Button text={'place your order'} onClick={handlePayment} />
         </div>        
     </div>
@@ -35,4 +35,13 @@ export default function TotalAmount() {
       alert(error)
     }
   }
+
+  function priceTag(price) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    })
+    return formatter.format(price)
+}
+
 }
