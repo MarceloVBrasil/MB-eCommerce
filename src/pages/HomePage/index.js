@@ -7,19 +7,22 @@ import { useUser } from "../../contexts/UserProvider"
 import { useNavigate } from "react-router-dom";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PendingIcon from '@mui/icons-material/Pending';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function HomePage() {
-  const {token, user, getTotalQuantityInCart} = useUser()
+  const {token, user, getTotalQuantityInCart, totalQuantityInCart} = useUser()
   const [searchParams, setSearchParams] = useSearchParams()
   const sessionCheckoutId = searchParams.get("sessionId")
   const [paymentStatus, setPaymentStatus] = useState("")
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
     if(sessionCheckoutId)
     createNewPaymentOrder(sessionCheckoutId)
+    getAllProducts()
   }, [])
-
+  if(!products[0]) return <div className='cart-page'><CircularProgress /></div>
   document.title = "MB eCommerce | Home";
   return (
     <div className="homepage">
@@ -32,7 +35,7 @@ export default function HomePage() {
         <CheckCircleOutlineIcon className="homepage-payment-success__icon" />
         <p className="homepage-payment-success__text">Order Received</p>
       </div>}
-      <ProductList />
+      <ProductList products={products}/>
     </div>
   );
 
@@ -47,6 +50,15 @@ export default function HomePage() {
     }
     catch (error) {
       alert(error.response.data)
+    }
+  }
+
+  async function getAllProducts() {
+    try {
+      const response = await axiosInstance.get("/products");
+      setProducts(response.data);
+    } catch (error) {
+      alert(error);
     }
   }
 }

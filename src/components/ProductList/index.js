@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axiosInstance from "../../utils/axiosInstance";
+import React from "react";
 import Product from "../Product";
 import "./ProductList.scss";
 import { Link } from "react-router-dom";
 
-export default function ProductList() {
-  const [products, setProducts] = useState([]);
+export default function ProductList({products}) {
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
   return (
     <div className="product-list">
       {products.map((product) => (
@@ -19,14 +14,4 @@ export default function ProductList() {
       ))}
     </div>
   );
-
-  async function getAllProducts() {
-    try {
-      const response = await axiosInstance.get("/products");
-      console.log(process.env.SERVER_URL)
-      setProducts(response.data);
-    } catch (error) {
-      alert(error);
-    }
-  }
 }

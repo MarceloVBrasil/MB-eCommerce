@@ -4,11 +4,14 @@ import axiosInstance from "../../utils/axiosInstance"
 import { useUser } from "../../contexts/UserProvider"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ProductDetailsForm({ product }) {
   const { token, user, getTotalQuantityInCart, isLoggedIn } = useUser()
   const [error, setError] = useState(false)
   const navigate = useNavigate()
+
+  if(!product.categoryName) return <div className='cart-page'><CircularProgress /></div>
   return (
     <>
     <form className='product-details-info' onSubmit={handleSubmit}>
