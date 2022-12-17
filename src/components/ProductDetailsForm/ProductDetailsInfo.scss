@@ -3,7 +3,7 @@
 @use "../../styles/partials/mixins" as *;
 
 .product-details-info {
-background-color: white;
+    background-color: white;
     display: flex;
     max-width: 20rem;
     color: $Graphite;
@@ -11,6 +11,7 @@ background-color: white;
     position: relative;
     padding-bottom: 3.0rem;
     margin-bottom: 1rem;
+    @include BoxShadow;
 
     @include Tablet {
         max-width: 35rem;

@@ -11,6 +11,7 @@
     color: $Graphite;
     border-radius: 0.25rem;
     position: relative;
+    @include BoxShadow;
     
     @include Tablet {
         min-width: 35rem;

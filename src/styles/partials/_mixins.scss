@@ -1,4 +1,5 @@
 @use './breakpoints' as *;
+@use './colors' as *;
 
 @mixin Tablet {
     @media screen and (min-width: $Tablet) {
@@ -10,4 +11,16 @@
     @media screen and (min-width: $Desktop) {
         @content;
     }
+}
+
+@mixin BoxShadow {
+    &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 0 10px $Cloud;
+  }
 }

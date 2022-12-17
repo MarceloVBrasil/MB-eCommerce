@@ -11,6 +11,7 @@
     border-radius: 0.25rem;
     position: relative;
     padding-bottom: 3.0rem;
+    @include BoxShadow;
 
     @include Tablet {
         min-width: 35rem;

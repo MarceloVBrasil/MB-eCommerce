@@ -1,19 +1,20 @@
 @use '../../styles/partials/colors' as *;
 @use '../../styles/partials/fonts' as *;
+@use '../../styles/partials/mixins' as *;
 
 .textarea {
     display: flex;
     flex-direction: column;
     row-gap: 0.25rem;
     margin-bottom: 0.75rem;
-
+    
     &__label {
         font-weight: 600;
         font-size: 1rem;
         text-transform: capitalize;
         font-family: "Titillium Web", open-sans, sans-serif;
     }
-
+    
     &__input {
         width: 100%;
         border-radius: 0.25rem;
@@ -22,7 +23,8 @@
         padding: 1rem ;
         min-height: 7rem;
         resize: none;
-
+        @include BoxShadow;
+        
         &::placeholder {
             margin-top: 1rem;
             font-size: 0.8125rem;

@@ -12,6 +12,7 @@ background-color: white;
     position: relative;
     padding-bottom: 3.0rem;
     margin-bottom: 2rem;
+    @include BoxShadow;
 
     @include Tablet {
         min-width: 35rem;

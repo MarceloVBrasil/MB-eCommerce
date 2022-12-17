@@ -1,3 +1,5 @@
+@use '../../styles/partials/mixins' as *;
+
 .cart-product-list {
     display: flex;
     flex-direction: column;

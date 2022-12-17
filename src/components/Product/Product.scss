@@ -1,4 +1,5 @@
 @use '../../styles/partials/colors' as *;
+@use '../../styles/partials/mixins' as *;
 
 .product {
     max-width: 20rem;
@@ -6,6 +7,7 @@
      border: 1px solid $Cloud;
     filter: drop-shadow(0.2rem 0.2rem 0.5rem $Cloud);
     border-radius: 0.25rem;
+  @include BoxShadow;
 
     &__image {
         width: 20rem;
