@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Button from '../Button'
 import Input from '../Input'
 import "./Login.scss"
@@ -9,10 +9,12 @@ import { useUser } from '../../contexts/UserProvider'
 
 export default function LoginForm() {
     const [errors, setErrors] = useState({})
+    const formRef = useRef(null)
     const {logIn} = useUser()
     const navigate = useNavigate()
+
   return (
-    <form className='login-form' onSubmit={handleSubmit}>
+      <form className='login-form' onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
           <section className='login-form-section'>
             <p className='login-form__title'>Login</p>
               <Input label={'email'} type={'text'} placeholder={'email'} error={errors.email} />
@@ -32,12 +34,12 @@ export default function LoginForm() {
 
     async function handleSubmit(e) {
         const errors = {}
-        e.preventDefault();
-        if(!validateEmail(e.target.email.value)) errors.email = "this field is required"
-        if (!e.target.password.value) errors.password = "this field is required"
+        e.preventDefault?.();
+        if(!validateEmail(formRef.current.email.value)) errors.email = "this field is required"
+        if (!formRef.current.password.value) errors.password = "this field is required"
         
         if (Object.values(errors).some((value) => value !== undefined)) return setErrors(errors)
-        const user = {email: e.target.email.value, password: e.target.password.value}
+        const user = {email: formRef.current.email.value, password: formRef.current.password.value}
         try {
             const response = await axiosInstance.post("/login", user)
             logIn(response.data)            
@@ -45,6 +47,13 @@ export default function LoginForm() {
 
         } catch (error) {
             alert(error.response.data)
+        }
+    }
+
+    function handleEnterPress(e) {
+        if (e.key === "Enter") {
+            e.preventDefault()
+            handleSubmit(formRef)
         }
     }
 }

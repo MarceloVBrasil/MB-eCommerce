@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "../Button";
 import DropDownMenu from "../DropDownMenu";
 import Input from "../Input";
@@ -9,9 +9,10 @@ import axiosInstance from "../../utils/axiosInstance";
 
 export default function RegisterForm() {
   const [error, setError] = useState({});
+  const formRef = useRef()
   const navigate = useNavigate();
   return (
-    <form className="register-form" onSubmit={handleSubmit}>
+    <form className="register-form" onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
       <section className="register-form-section">
         <p className="register-form-section__title">user information</p>
         <Input
@@ -69,17 +70,24 @@ export default function RegisterForm() {
     navigate(-1);
   }
 
+  function handleEnterPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      handleSubmit(formRef)
+    }
+  }
+
   async function handleSubmit(e) {
     const errors = {};
-    e.preventDefault();
-    if (!e.target.name.value) errors.name = "This field is required";
-    if (!e.target.password.value) errors.password = "This field is required";
-    if (!validateEmail(e.target.email.value))
+    e.preventDefault?.();
+    if (!formRef.current.name.value) errors.name = "This field is required";
+    if (!formRef.current.password.value) errors.password = "This field is required";
+    if (!validateEmail(formRef.current.email.value))
       errors.email = "This field is required";
-    if (!e.target.street.value) errors.street = "This field is required";
-    if (!e.target.province.value) errors.province = "This field is required";
-    if (!e.target.city.value) errors.city = "This field is required";
-    if (!validatePostalCode(e.target.postalCode.value))
+    if (!formRef.current.street.value) errors.street = "This field is required";
+    if (!formRef.current.province.value) errors.province = "This field is required";
+    if (!formRef.current.city.value) errors.city = "This field is required";
+    if (!validatePostalCode(formRef.current.postalCode.value))
       errors.postalCode = "This field is required";
 
     if (Object.values(errors).some((value) => value !== undefined))
@@ -88,14 +96,14 @@ export default function RegisterForm() {
 
     // register user
     const newUser = {
-      name: e.target.name.value,
-      password: e.target.password.value,
-      email: e.target.email.value,
-      street: e.target.street.value,
-      city: e.target.city.value,
-      province: e.target.province.value,
-      postalCode: e.target.postalCode.value,
-      complement: e.target.complement.value,
+      name: formRef.current.name.value,
+      password: formRef.current.password.value,
+      email: formRef.current.email.value,
+      street: formRef.current.street.value,
+      city: formRef.current.city.value,
+      province: formRef.current.province.value,
+      postalCode: formRef.current.postalCode.value,
+      complement: formRef.current.complement.value,
     };
 
     try {
