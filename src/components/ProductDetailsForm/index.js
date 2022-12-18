@@ -5,15 +5,19 @@ import { useUser } from "../../contexts/UserProvider"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import CircularProgress from '@mui/material/CircularProgress';
+import Modal from "../Modal"
 
 export default function ProductDetailsForm({ product }) {
   const { token, user, getTotalQuantityInCart, isLoggedIn } = useUser()
   const [error, setError] = useState(false)
+  const [response, setResponse] = useState("")
+  const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
 
   if(!product.categoryName) return <div className='cart-page'><CircularProgress /></div>
   return (
     <>
+    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
     <form className='product-details-info' onSubmit={handleSubmit}>
         <section className='product-details-info-section'>
               <p className='product-details-info-section__title'>{product.name}</p>
@@ -78,7 +82,8 @@ export default function ProductDetailsForm({ product }) {
 
       navigate("/cart")
     } catch (error) {
-      alert(error)
+      setResponse(error.response.data)
+      setShowModal(true)
     }
   }
 }

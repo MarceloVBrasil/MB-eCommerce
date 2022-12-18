@@ -3,13 +3,18 @@ import Button from '../Button'
 import TextArea from '../TextArea'
 import "./CommentsForm.scss"
 import { useUser } from '../../contexts/UserProvider'
-import  axiosInstance  from "../../utils/axiosInstance"
+import axiosInstance from "../../utils/axiosInstance"
+import Modal from '../Modal'
 
 export default function CommentsForm({ productId, setComments, getComments }) {
   const {isLoggedIn, user, token} = useUser()
   const [error, setError] = useState({})
   const [message, setMessage] = useState("")
+  const [response, setResponse] = useState("")
+  const [showModal, setShowModal] = useState(false)
   return (
+    <>
+    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
     <form className='comments-form' onSubmit={handleSubmit}>
         <TextArea
         label={'comment'}
@@ -22,6 +27,7 @@ export default function CommentsForm({ productId, setComments, getComments }) {
               <Button text='comment'/>
           </div>
     </form>
+  </>
   )
 
   async function handleSubmit(e) {
@@ -38,7 +44,8 @@ export default function CommentsForm({ productId, setComments, getComments }) {
       getComments(productId)
       setMessage("")
     } catch (error) {
-      alert(error.response.data)
+      setResponse(error.response.data)
+      setShowModal(true)
     }
   }
 }

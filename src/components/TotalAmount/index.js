@@ -3,14 +3,19 @@ import Button from '../Button'
 import "./TotalAmount.scss"
 import {useUser} from "../../contexts/UserProvider";
 import axiosInstance from '../../utils/axiosInstance';
+import Modal from '../Modal';
+import { priceTag } from '../../utils/priceTag';
 
 export default function TotalAmount() {
   const [error, setError] = useState("")
   const { totalAmount, totalQuantityInCart, token, user } = useUser()
+  const [response, setResponse] = useState("")
+  const [showModal, setShowModal] = useState(false)
 
   return (
     <>
-    <div className='amount'>
+      <div className='amount'>
+        <Modal show={showModal} message={response} setShowModal={setShowModal}/>
         {error && <p className='amount__error'><span>! </span> {error}</p>}
         <div className='total-amount'>
           <p className='total-amount__cost'>Total: {priceTag(totalAmount)}</p>
@@ -32,16 +37,8 @@ export default function TotalAmount() {
   
       window.location.href = response.data.url
     } catch (error) {
-      alert(error)
+      setResponse(error.response.data)
+      setShowModal(true)
     }
   }
-
-  function priceTag(price) {
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    })
-    return formatter.format(price)
-}
-
 }
