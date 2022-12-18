@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PendingIcon from '@mui/icons-material/Pending';
 import CircularProgress from '@mui/material/CircularProgress';
+import Modal from "../../components/Modal";
 
 export default function HomePage() {
   const {token, user, getTotalQuantityInCart, totalQuantityInCart} = useUser()
@@ -16,6 +17,8 @@ export default function HomePage() {
   const [paymentStatus, setPaymentStatus] = useState("")
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
+  const [response, setResponse] = useState("")
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if(sessionCheckoutId)
@@ -26,6 +29,7 @@ export default function HomePage() {
   document.title = "MB eCommerce | Home";
   return (
     <div className="homepage">
+    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
       {paymentStatus === "pending" && <div className="homepage-payment-success homepage-payment-pending">
         <PendingIcon className="homepage-payment-success__icon" />
         <p className="homepage-payment-success__text">Order Pending</p>
@@ -45,11 +49,15 @@ export default function HomePage() {
       const response = await axiosInstance.get(`/orders?sessionId=${sessionId}&userId=${user.id}`, { headers: { authorization: `Bearer ${token}` } })
       navigate("/")
       getTotalQuantityInCart(user.id)
-      if (response.status === 400) alert(response.data)
+      if (response.status === 400) {
+        setResponse(response.data)
+        setShowModal(true)
+      }
       else setPaymentStatus("success")
     }
     catch (error) {
-      alert(error.response.data)
+      setResponse(response.response.data)
+      setShowModal(true)
     }
   }
 
@@ -58,7 +66,8 @@ export default function HomePage() {
       const response = await axiosInstance.get("/products");
       setProducts(response.data);
     } catch (error) {
-      alert(error);
+      setResponse(error.response.data)
+      setShowModal(true)
     }
   }
 }

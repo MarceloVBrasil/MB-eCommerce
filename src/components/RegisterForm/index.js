@@ -6,12 +6,18 @@ import "./RegisterForm.scss";
 import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePostalCode } from "../../utils/validate";
 import axiosInstance from "../../utils/axiosInstance";
+import Modal from "../Modal";
 
 export default function RegisterForm() {
   const [error, setError] = useState({});
   const formRef = useRef()
-  const navigate = useNavigate();
+  const [response, setResponse] = useState("")
+  const [showModal, setShowModal] = useState(false)
+  const [navigateValue, setNavigateValue] = useState()
+  const navigate = useNavigate()
   return (
+    <>
+      <Modal show={showModal} message={response} setShowModal={setShowModal} navigateValue={navigateValue} />
     <form className="register-form" onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
       <section className="register-form-section">
         <p className="register-form-section__title">user information</p>
@@ -26,13 +32,13 @@ export default function RegisterForm() {
           placeholder={"password"}
           type={"password"}
           error={error.password}
-        />
+          />
         <Input
           label={"email"}
           placeholder={"email"}
           type={"text"}
           error={error.email}
-        />
+          />
       </section>
       <section className="register-form-section">
         <p className="register-form-section__title">address information</p>
@@ -41,13 +47,13 @@ export default function RegisterForm() {
           placeholder={"street"}
           type={"text"}
           error={error.street}
-        />
+          />
         <Input
           label={"city"}
           placeholder={"city"}
           type={"text"}
           error={error.city}
-        />
+          />
         <DropDownMenu error={error.province} />
         <Input label={"complement"} placeholder={"complement"} type={"text"} />
         <Input
@@ -56,13 +62,14 @@ export default function RegisterForm() {
           type={"text"}
           name="postalCode"
           error={error.postalCode}
-        />
+          />
       </section>
       <div className="register-form-buttons">
         <Button type={"cancel"} text={"cancel"} onClick={handleCancelButton} />
         <Button text={"register"} type={"submit"} />
       </div>
     </form>
+  </>
   );
 
   function handleCancelButton(e) {
@@ -108,10 +115,12 @@ export default function RegisterForm() {
 
     try {
       const response = await axiosInstance.post("/register", newUser);
-      alert("User added successfully :)");
-      navigate(-1)
+      setNavigateValue(-1)
+      setResponse("User Added Successfully :)")
+      setShowModal(true)
     } catch (error) {
-      alert(error);
+       setResponse(error.response.data);
+       setShowModal(true)
     }
   }
 }

@@ -6,14 +6,19 @@ import { useNavigate } from 'react-router-dom'
 import {validateEmail} from "../../utils/validate"
 import axiosInstance from '../../utils/axiosInstance'
 import { useUser } from '../../contexts/UserProvider'
+import Modal from '../Modal'
 
 export default function LoginForm() {
     const [errors, setErrors] = useState({})
+    const[response, setResponse] = useState("")
+    const [showModal, setShowModal] = useState(false)
     const formRef = useRef(null)
     const {logIn} = useUser()
     const navigate = useNavigate()
 
-  return (
+    return (
+        <>
+        <Modal show={showModal} message={response} setShowModal={setShowModal}/>
       <form className='login-form' onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
           <section className='login-form-section'>
             <p className='login-form__title'>Login</p>
@@ -25,6 +30,7 @@ export default function LoginForm() {
             <Button text={'log in'} type='submit'/>
         </div>
     </form>
+    </>
     )
     
     function handleCancelButton(e) {
@@ -46,7 +52,8 @@ export default function LoginForm() {
             navigate("/")
 
         } catch (error) {
-            alert(error.response.data)
+            setResponse(error.response.data)
+            setShowModal(true)
         }
     }
 

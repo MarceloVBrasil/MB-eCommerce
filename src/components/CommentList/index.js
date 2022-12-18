@@ -1,4 +1,3 @@
-import Reactt from 'react'
 import Comment from '../Comment'
 import "./CommentList.scss"
 

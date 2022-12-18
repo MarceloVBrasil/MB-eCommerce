@@ -3,9 +3,12 @@ import axiosInstance from '../../utils/axiosInstance'
 import "./CartProduct.scss"
 import { useUser } from '../../contexts/UserProvider'
 import Button from '../Button'
+import Modal from '../Modal'
 
 export default function CartProduct({ productId, quantity }) {
     const [product, setProduct] = useState()
+    const [response, setResponse] = useState("")
+    const [showModal, setShowModal] = useState(true)
     const [totalQuantityOfProductInCart, setTotalQuantityOfProductInCart] = useState(quantity)
     const {token, getTotalQuantityInCart, user} = useUser()
     
@@ -14,7 +17,9 @@ export default function CartProduct({ productId, quantity }) {
     }, [])
 
     if(!product) return
-  return (
+    return (
+        <>
+    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
     <div className='cart-product'>
         <section className='cart-product-section'>
               <p className='cart-product-section__title'>{product.name}</p>
@@ -29,6 +34,7 @@ export default function CartProduct({ productId, quantity }) {
               <Button text={"+ Add to Cart"} type={"submit"} onClick={() => handleUpdateCart(1)} />
         </div>
     </div>
+  </>
     )
     
     async function getProduct(productId) {
@@ -36,7 +42,8 @@ export default function CartProduct({ productId, quantity }) {
             const response = await axiosInstance.get(`/products/${productId}`, { headers: { authorization: `Bearer ${token}` } })
             setProduct(response.data)
         } catch (error) {
-            alert(error.response.data)
+            setResponse(error.response.data)
+            setShowModal(true)
         }
     }
 
@@ -49,7 +56,8 @@ export default function CartProduct({ productId, quantity }) {
             getTotalQuantityInCart(user.id)
             getTotalQuantityInCartByProductId(cartId, productId)
         } catch (error) {
-            alert(error.response.data)
+            setResponse(error.response.data)
+            setShowModal(true)
         }
     }
 
@@ -59,7 +67,8 @@ export default function CartProduct({ productId, quantity }) {
             setTotalQuantityOfProductInCart(response.data.quantity)
 
         } catch (error) {
-            alert(error.response.data)
+            setResponse(error.response.data)
+            setShowModal(true)
         }
     }
 }

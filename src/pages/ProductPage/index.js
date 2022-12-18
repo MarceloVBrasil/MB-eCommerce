@@ -5,12 +5,15 @@ import CommentsForm from '../../components/CommentsForm'
 import ProductDetailsForm from '../../components/ProductDetailsForm'
 import "./ProductPage.scss"
 import CommentList from '../../components/CommentList'
+import Modal from '../../components/Modal'
 
 export default function ProductPage() {
   document.title = "MB eCommerce | Product"
     const { productId } = useParams()
   const [productDetails, setProductDetails] = useState({})
   const [comments, setComments] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [response, setResponse] = useState("")
 
     useEffect(() => {
       getProductDetails(productId)
@@ -19,6 +22,7 @@ export default function ProductPage() {
   
   return (
     <div className='product-page'>
+      <Modal show={showModal} message={response} setShowModal={setShowModal}/>
       <ProductDetailsForm product={productDetails} />
       <CommentsForm productId={productId} setComments={setComments} getComments={getComments} />
       <CommentList productId={productId} comments={comments} />
@@ -30,7 +34,8 @@ export default function ProductPage() {
         const response = await axiosInstance.get(`/products/${id}`)
         setProductDetails(response.data)
     } catch (error) {
-        alert(error)
+      setResponse(error.response.data)
+      setShowModal(true)
     }
   }
 
@@ -39,7 +44,8 @@ export default function ProductPage() {
           const response = await axiosInstance.get(`/comments/${id}`)
           setComments(response.data)
       } catch (error) {
-          alert(error)
+          setResponse(error.response.data)
+          setShowModal(true)
       }
   }
 }
