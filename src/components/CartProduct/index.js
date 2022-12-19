@@ -8,7 +8,7 @@ import Modal from '../Modal'
 export default function CartProduct({ productId, quantity }) {
     const [product, setProduct] = useState()
     const [response, setResponse] = useState("")
-    const [showModal, setShowModal] = useState(true)
+    const [showModal, setShowModal] = useState(false)
     const [totalQuantityOfProductInCart, setTotalQuantityOfProductInCart] = useState(quantity)
     const {token, getTotalQuantityInCart, user} = useUser()
     
