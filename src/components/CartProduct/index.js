@@ -10,7 +10,7 @@ export default function CartProduct({ productId, quantity }) {
     const [response, setResponse] = useState("")
     const [showModal, setShowModal] = useState(false)
     const [totalQuantityOfProductInCart, setTotalQuantityOfProductInCart] = useState(quantity)
-    const {token, getTotalQuantityInCart, user} = useUser()
+    const {token, user, setTotalQuantityInCart, setTotalAmount} = useUser()
     
     useEffect(() => {
         getProduct(productId)
@@ -49,23 +49,19 @@ export default function CartProduct({ productId, quantity }) {
 
     async function handleUpdateCart(variation) {
         const increment = variation === 1
+        if (increment) {
+            setTotalQuantityInCart(prev => prev + 1)
+            setTotalQuantityOfProductInCart(prev => prev + 1)
+            setTotalAmount(prev => prev + product.price)
+        } else {
+            if(totalQuantityOfProductInCart > 0) setTotalAmount(prev => prev - product.price)
+            setTotalQuantityInCart(prev => prev - 1 >= 0 ? prev - 1 : prev)
+            setTotalQuantityOfProductInCart(prev => prev - 1 >= 0 ? prev - 1 : prev)
+        }
         try {
             let response = await axiosInstance.get(`/carts/${user.id}`, { headers: { authorization: `Bearer ${token}` } })
             const cartId = response.data.id
             response = await axiosInstance.put(`/purchase/${product.id}`, { cartId, increment }, { headers: { authorization: `Bearer ${token}` } })
-            getTotalQuantityInCart(user.id)
-            getTotalQuantityInCartByProductId(cartId, productId)
-        } catch (error) {
-            setResponse(error.response.data)
-            setShowModal(true)
-        }
-    }
-
-    async function getTotalQuantityInCartByProductId(cartId, productId) {
-        try {
-            const response = await axiosInstance.get(`purchase/${cartId}/${productId}`, { headers: { authorization: `Bearer ${token}` } })
-            setTotalQuantityOfProductInCart(response.data.quantity)
-
         } catch (error) {
             setResponse(error.response.data)
             setShowModal(true)

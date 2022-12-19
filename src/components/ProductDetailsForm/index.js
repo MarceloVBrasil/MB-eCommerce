@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Modal from "../Modal"
 
 export default function ProductDetailsForm({ product }) {
-  const { token, user, getTotalQuantityInCart, isLoggedIn } = useUser()
+  const { token, user, isLoggedIn, setTotalQuantityInCart, setTotalAmount } = useUser()
   const [error, setError] = useState(false)
   const [response, setResponse] = useState("")
   const [showModal, setShowModal] = useState(false)
@@ -60,28 +60,34 @@ export default function ProductDetailsForm({ product }) {
       let cartId = response.data.id
 
       if (!cartId) {
+        setTotalQuantityInCart(prev => prev + 1)
+        setTotalAmount(prev => prev + product.price)
            response = await axiosInstance.post("/carts", { userId: user.id }, {headers: {authorization: `Bearer ${token}`}})
            cartId = response.data
          await axiosInstance.post(`/purchase/${product.id}`, { cartId }, { headers: { authorization: `Bearer ${token}` } })
          navigate("/cart")
-        return getTotalQuantityInCart(user.id)
+        return
       } 
 
       response = await axiosInstance.get(`/purchase/check/${cartId}/${product.id}`, { headers: { authorization: `Bearer ${token}` } })
       const isProductInThisCart = response.data
 
       if (isProductInThisCart) {
+        setTotalQuantityInCart(prev => prev + 1)
+        setTotalAmount(prev => prev + product.price) 
         await axiosInstance.put(`/purchase/${product.id}`, { cartId, increment: true }, { headers: { authorization: `Bearer ${token}` } })
          navigate("/cart")
-        return getTotalQuantityInCart(user.id)
+        return 
       }
 
+      setTotalQuantityInCart(prev => prev + 1) 
+      setTotalAmount(prev => prev + product.price) 
       await axiosInstance.post(`/purchase/${product.id}`, { cartId }, { headers: { authorization: `Bearer ${token}` } })
-      getTotalQuantityInCart(user.id)
       
-
       navigate("/cart")
     } catch (error) {
+      setTotalQuantityInCart(prev => prev - 1) 
+      setTotalAmount(prev => prev - product.price) 
       setResponse(error.response.data)
       setShowModal(true)
     }
