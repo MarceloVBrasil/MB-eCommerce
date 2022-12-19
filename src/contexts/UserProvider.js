@@ -17,7 +17,7 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         getTotalAmount(user.id)
-    }, [totalQuantityInCart])
+    }, [])
     
     function logIn(data) {
         const {token, ...user} = data
@@ -60,7 +60,9 @@ export function UserProvider({ children }) {
         getTotalQuantityInCart,
         totalQuantityInCart,
         totalAmount,
-        getTotalAmount
+        getTotalAmount,
+        setTotalQuantityInCart,
+        setTotalAmount
     }
 
     return (
