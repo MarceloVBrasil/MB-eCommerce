@@ -30,7 +30,7 @@ export default function CartProduct({ productId, quantity }) {
             <p className='cart-product-section__description'>{ totalQuantityOfProductInCart }</p>
           </section>
         <div className="cart-product-buttons">
-              <Button text={"remove"} type={"cancel"} onClick={() => handleUpdateCart(-1)} />
+                    <Button text={"remove"} type={"cancel"} onClick={() => handleUpdateCart(-1)} disable={totalQuantityOfProductInCart === 0} />
               <Button text={"+ Add to Cart"} type={"submit"} onClick={() => handleUpdateCart(1)} />
         </div>
     </div>
