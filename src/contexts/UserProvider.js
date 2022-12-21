@@ -14,7 +14,7 @@ export function UserProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(token !== "")
     const [totalQuantityInCart, setTotalQuantityInCart] = useState()
     const [totalAmount, setTotalAmount] = useState(0)
-    const [orders, setOrders] = useLocalStorage("my-orders", undefined)
+    const [orders, setOrders] = useLocalStorage("my-orders", [])
 
     useEffect(() => {
         getTotalAmount(user.id)
