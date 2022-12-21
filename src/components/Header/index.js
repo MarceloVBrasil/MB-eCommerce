@@ -24,7 +24,7 @@ export default function Header() {
         isLoggedIn &&
         <div className="header-links">
             <ShoppingCartIcon />
-            <p className="header-links__greeting">Welcome, {user?.name}!</p>
+            <Link to={`/user/${user.id}`}><p className="header-links__link header-links__greeting">Welcome, {user?.name}!</p></Link>
             <Link to="/login"><p className="header-links__link" onClick={logOut}>Logout</p></Link>
           </div>
       }
