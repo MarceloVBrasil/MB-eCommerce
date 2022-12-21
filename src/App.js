@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import "./styles/App.scss";
+import UserPage from "./pages/UserPage";
+import UserOrdersPage from "./pages/UserOrdersPage";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/user/:userId" element={<UserPage />} />
+          <Route path="/user/:userId/orders" element={<UserOrdersPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
