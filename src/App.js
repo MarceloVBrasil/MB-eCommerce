@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import "./styles/App.scss";
 import UserPage from "./pages/UserPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/user/:userId" element={<UserPage />} />
           <Route path="/user/:userId/orders" element={<UserOrdersPage />} />
+          <Route path="/user/:userId/orders/:orderId" element={<OrderDetailsPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

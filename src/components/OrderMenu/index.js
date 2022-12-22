@@ -16,7 +16,9 @@ export default function OrderMenu({ orders }) {
               <p className='order-menu-section__description'>{orders.length}</p>
           </section>
         <div className="order-menu-buttons">
-              <Link to={'./orders'}><Button text={"My Orders"} type={"submit"} disable={!orders.length} /></Link>
+        <Link to={'./orders'} className="order-menu-buttons__link">
+          <Button text={"My Orders"} type={"submit"} disable={!orders.length} />
+        </Link>
         </div>
     </div>
   )
