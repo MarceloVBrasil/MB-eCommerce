@@ -58,24 +58,17 @@
             @include Tablet {
                 flex-direction: row;
             }
-            
-            &-group {
-                display: flex;
-                flex-direction: column;
-
-                &__title {
-                    font-family: 'Titillium Web', open-sans, sans-serif;
-                }
-
-                &__description {
-                    font-size: 0.8125rem;
-                }
-            }
         }
 
         &__description {
+            font-size: 0.86rem;
            white-space: pre-wrap;
            line-height: 1.75rem;
+           
+           @include Tablet {
+            font-size: 1rem;
+           }
+           
         }
     }
 
