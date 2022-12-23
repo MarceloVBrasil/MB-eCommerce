@@ -115,6 +115,10 @@ export default function RegisterForm() {
 
     try {
       const response = await axiosInstance.post("/register", newUser);
+      if (response.status === 400) {
+        setResponse(response.data)
+        setShowModal(true)
+      }
       setNavigateValue(-1)
       setResponse("User Added Successfully :)")
       setShowModal(true)
