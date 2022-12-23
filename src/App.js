@@ -10,6 +10,7 @@ import "./styles/App.scss";
 import UserPage from "./pages/UserPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
+import EditUserPage from "./pages/EditUserPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/user/:userId" element={<UserPage />} />
           <Route path="/user/:userId/orders" element={<UserOrdersPage />} />
           <Route path="/user/:userId/orders/:orderId" element={<OrderDetailsPage />} />
+          <Route path="/user/:userId/edit" element={<EditUserPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

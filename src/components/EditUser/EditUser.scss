@@ -1,0 +1,67 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/fonts" as *;
+@use "../../styles/partials/mixins" as *;
+
+.edit-user {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-width: 20rem;
+    color: $Graphite;
+    border-radius: 0.25rem;
+    position: relative;
+    padding-bottom: 3.0rem;
+    @include BoxShadow;
+
+    @include Tablet {
+        min-width: 35rem;
+        flex-direction: row;
+    }
+
+    @include Desktop {
+        min-width: 50rem;
+    }
+
+    &-section {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Titillium Web', open-sans, sans-serif;
+        padding: 0.5rem;
+        
+        &__title {
+            font-size: 1.5rem;
+            text-transform: capitalize;
+            margin-bottom: 1.5rem;
+            font-family: inherit;
+        }
+        
+        @include Tablet {
+            width: 50%;
+            
+            &:first-child {
+                margin: 0.5rem 0;
+                border-right: 1px solid $Cloud;
+            }
+
+            &:nth-child(2) {
+                margin: 0.5rem 0;
+            }
+        }
+    }
+
+    &-buttons {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: space-around;
+        background-color: $LightGray;
+        padding: 0.5rem;
+        width: 100%;
+        column-gap: 0.5rem;
+
+        @include Desktop {
+            justify-content: flex-end;
+
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Input.scss";
 
-export default function Input({ label, placeholder, type, name, error }) {
+export default function Input({ label, placeholder, type, name, error, value }) {
   return (
     <div className="input">
       <label className="input__label">{label}</label>
@@ -10,6 +10,7 @@ export default function Input({ label, placeholder, type, name, error }) {
         placeholder={placeholder}
         className="input__input"
         name={name || label}
+        defaultValue={ value }
       />
       {error && (
         <p className="input__error">

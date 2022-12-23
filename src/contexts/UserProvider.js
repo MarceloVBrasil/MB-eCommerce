@@ -72,6 +72,7 @@ export function UserProvider({ children }) {
         logOut,
         isLoggedIn,
         user,
+        setUser,
         getTotalQuantityInCart,
         totalQuantityInCart,
         totalAmount,
@@ -82,7 +83,9 @@ export function UserProvider({ children }) {
         setOrders,
         response,
         setResponse,
-        showModal, setShowModal
+        showModal,
+        setShowModal,
+        getOrders
     }
 
     return (

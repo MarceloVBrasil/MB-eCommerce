@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import "./DropDownMenu.scss";
 
-export default function DropDownMenu({ error }) {
+export default function DropDownMenu({ error, selected }) {
+  const [isSelected, setIsSelected] = useState(selected)
   return (
     <div className="menu">
       <label className="menu__label">provinces</label>
-      <select className="menu__options" name="province">
+      <select className="menu__options" name="province"
+      value={isSelected || selected} onChange={ (e) => setIsSelected(e.target.value)}>
         <option value={""} hidden>
           Please Select
         </option>
