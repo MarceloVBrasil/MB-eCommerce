@@ -71,4 +71,10 @@ background-color: white;
 
         }
     }
+
+    &-buttons__link {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
 }

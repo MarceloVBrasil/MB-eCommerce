@@ -13,6 +13,12 @@
     }
 }
 
+@mixin Width348 {
+    @media screen and (min-width: $Width-348) {
+        @content;
+    }
+}
+
 @mixin BoxShadow {
     &::before {
     content: '';

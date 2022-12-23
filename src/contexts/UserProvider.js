@@ -11,10 +11,12 @@ export function useUser() {
 export function UserProvider({ children }) {
     const [token, setToken] = useLocalStorage("token", "")
     const [user, setUser] = useLocalStorage("user", {})
+    const [orders, setOrders] = useLocalStorage("myOrders", [])
     const [isLoggedIn, setIsLoggedIn] = useState(token !== "")
-    const [totalQuantityInCart, setTotalQuantityInCart] = useState()
+    const [totalQuantityInCart, setTotalQuantityInCart] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
-    const [orders, setOrders] = useLocalStorage("my-orders", [])
+    const [response, setResponse] = useState("")
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         getTotalAmount(user.id)
@@ -25,12 +27,14 @@ export function UserProvider({ children }) {
         setToken(token)
         setUser(user)
         setIsLoggedIn(true)
+        getOrders(user.id)
     }
 
     function logOut() {
-        setToken("")
-        setUser({})
         setIsLoggedIn(false)
+        localStorage.removeItem("MBeCommerce-token")
+        localStorage.removeItem("MBeCommerce-user")
+        localStorage.removeItem("MBeCommerce-myOrders")
     }
 
     async function getTotalQuantityInCart(userId) {
@@ -52,12 +56,23 @@ export function UserProvider({ children }) {
         return setTotalAmount(response.data)
     }
 
+    async function getOrders(userId) {
+        try {
+            const response = await axiosInstance.get(`orders/${userId}`, { headers: { authorization: `Bearer ${token}` } })
+            setOrders(response.data)
+        } catch (error) {
+            setResponse(error.response.data)
+            setShowModal(true)
+        }
+    }
+
     const userContextValue = {
         token,
         logIn,
         logOut,
         isLoggedIn,
         user,
+        setUser,
         getTotalQuantityInCart,
         totalQuantityInCart,
         totalAmount,
@@ -65,7 +80,12 @@ export function UserProvider({ children }) {
         setTotalQuantityInCart,
         setTotalAmount,
         orders,
-        setOrders
+        setOrders,
+        response,
+        setResponse,
+        showModal,
+        setShowModal,
+        getOrders
     }
 
     return (

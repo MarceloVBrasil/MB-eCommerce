@@ -8,7 +8,7 @@ export default function OrderList({ orders }) {
   return (
     <div className='order-list'>
       {orders.map((order) => (
-          <Order order={order} key={order.cartId} />
+          <Order order={order} key={order.id} />
       ))}
     </div>
   )

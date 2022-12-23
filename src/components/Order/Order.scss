@@ -29,6 +29,7 @@ background-color: white;
         font-family: 'Titillium Web', open-sans, sans-serif;
         padding: 0.5rem;
         width: 50%;
+        gap: 1rem;
 
         &:first-child {
             margin: 0.5rem 0;
@@ -38,21 +39,52 @@ background-color: white;
         &:nth-child(2) {
             margin: 0.5rem 0;
         }
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.5rem;
+            column-gap: 1.5rem;
+            width: 100%;
+
+            &-flex {
+                @include Tablet {
+                   display: flex;
+                   justify-content: space-between;
+                }
+            }
+        }
         
         &__title {
             font-size: 1.1rem;
             text-transform: capitalize;
-            margin-bottom: 1.5rem;
-            font-family: inherit;
+            font-family: 'Titillium Web', open-sans, sans-serif;
         }
 
         &__image {
             max-width: 7rem;
+            margin-top: 1rem;
         }
 
         &__description {
            white-space: pre-wrap;
            line-height: 1.75rem;
+        }
+
+        &__status {
+            text-transform: uppercase;
+            border-radius: 50rem;
+            text-align: center;
+
+            &--sent {
+                color: hsl(168, 57%, 33%);
+                background-color: hsl(162, 31%, 79%);
+            }
+
+            &--not-sent {
+                color: hsl(16, 81%, 44%);
+                background-color: hsl(18, 62%, 96%);
+            }
         }
     }
 
@@ -70,5 +102,11 @@ background-color: white;
             justify-content: flex-end;
 
         }
+    }
+
+    &-buttons__link {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
     }
 }

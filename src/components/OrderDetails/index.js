@@ -1,59 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import "./OrderDetails.scss"
-import { useParams } from 'react-router-dom'
-import { useUser } from '../../contexts/UserProvider'
-import { CircularProgress } from '@mui/material'
-import axiosInstance from '../../utils/axiosInstance'
+import shoppingBag from "../../assets/images/shoppingBag.png"
+import Button from '../Button'
+import { useNavigate } from 'react-router-dom'
 
-export default function OrderDetails() {
-    const { orderId } = useParams()
-    const { user, token } = useUser()
-    const [order, setOrder] = useState(undefined)
-    const [response, setResponse] = useState("")
-    const [showModal, setShowModal] = useState(false)
+export default function OrderDetails({order}) {
+  const navigate = useNavigate()
 
-    useState(() => {
-        getOrderDetails(orderId)
-    }, [])
-
-    if(!order) return <div className='order-details'><CircularProgress /></div>
   return (
     <div className='order-details'>
-      <Modal show={showModal} message={response} setShowModal={setShowModal}/>
-    <div className='order-details-info' onSubmit={handleSubmit}>
+    <div className='order-details-info'>
         <section className='order-details-info-section'>
-              <p className='order-details-info-section__title'>{product.name}</p>
-              <img src={product.image} alt={product.name} />
+              <p className='order-details-info-section__title'>{`Order #${order[0].id} Details`}</p>
+              <img src={shoppingBag} alt={`Order #${order.id}`} />
       </section>
           <section className='order-details-info-section'>
-            <p className='order-details-info-section__title'>description</p>
-        <p className='order-details-info-section__description'>{product.description}</p>
-        
-        <div className="order-details-info-section-container">
-          <div className="order-details-info-section-container-group">
-            <label className="order-details-info-section-container-group__title">Brand</label>
-            <p className='order-details-info-section-container-group__description'>{product.brandName}</p>
-          </div>
-          <div className="order-details-info-section-container-group">
-            <label className="order-details-info-section-container-group__title">Category</label>
-            <p className='order-details-info-section-container-group__description'>{product.categoryName}</p>
-          </div>
-        </div>
+            <p className='order-details-info-section__title'>products</p>
+          {order.map((o, index) => <p className='order-details-info-section__description' key={index}>{`${o.name} x${o.quantity}`}</p>)}
       </section>
         <div className="order-details-info-buttons">
-            <Button text={"+ Add to Cart"} type={"submit"} />
+          <Button text={'OK'} type={"submit"} onClick={handleClick} />
         </div>
       </div>
     </div>
-    )
-    
-    async function getOrderDetails(orderId) {
-        try {
-            const response = await axiosInstance.get(`carts/${user.id}/${orderId}`, { headers: { authorization: `Bearer ${token}` } })
-            setOrder(response.data)
-        } catch (error) {
-            setResponse(error.response.data)
-            setShowModal(true)
-        }
-    }
+  )
+  
+  function handleClick() {
+    navigate(-1)
+  }
 }

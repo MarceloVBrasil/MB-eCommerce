@@ -2,24 +2,26 @@
 @use "../../styles/partials/fonts" as *;
 @use "../../styles/partials/mixins" as *;
 
-.order-details-info {
-    background-color: white;
+.edit-user-menu {
+background-color: white;
     display: flex;
-    max-width: 20rem;
+    min-width: 20rem;
+    max-height: 20rem;
     color: $Graphite;
     border-radius: 0.25rem;
     position: relative;
     padding-bottom: 3.0rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     @include BoxShadow;
 
     @include Tablet {
-        max-width: 35rem;
+        min-width: 35rem;
     }
 
     @include Desktop {
-        max-width: 40rem;
+        min-width: 40rem;
     }
+
 
     &-section {
         display: flex;
@@ -42,33 +44,15 @@
             text-transform: capitalize;
             margin-bottom: 1.5rem;
             font-family: inherit;
-
-            @include Tablet {
-                font-size: 1.5rem;
-            }
         }
 
-        &-container {
-            display: flex;
-            flex-direction: column;
-            row-gap: 1.5rem;
-            justify-content: space-between;
-            margin-top: 2rem;
-
-            @include Tablet {
-                flex-direction: row;
-            }
+        &__image {
+            max-width: 7rem;
         }
 
         &__description {
-            font-size: 0.86rem;
            white-space: pre-wrap;
            line-height: 1.75rem;
-           
-           @include Tablet {
-            font-size: 1rem;
-           }
-           
         }
     }
 
@@ -86,5 +70,11 @@
             justify-content: flex-end;
 
         }
+    }
+
+    &-buttons__link {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
     }
 }
