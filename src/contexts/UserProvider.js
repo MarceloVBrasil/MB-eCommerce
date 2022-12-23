@@ -27,7 +27,6 @@ export function UserProvider({ children }) {
         setToken(token)
         setUser(user)
         setIsLoggedIn(true)
-        getOrders(user.id)
     }
 
     function logOut() {
