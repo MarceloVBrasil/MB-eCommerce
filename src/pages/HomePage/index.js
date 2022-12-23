@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Modal from "../../components/Modal";
 
 export default function HomePage() {
-  const {token, user, getTotalQuantityInCart, totalQuantityInCart} = useUser()
+  const {token, user, getTotalQuantityInCart, getOrders} = useUser()
   const [searchParams, setSearchParams] = useSearchParams()
   const sessionCheckoutId = searchParams.get("sessionId")
   const [paymentStatus, setPaymentStatus] = useState("")
@@ -49,6 +49,7 @@ export default function HomePage() {
       const response = await axiosInstance.get(`/orders?sessionId=${sessionId}&userId=${user.id}`, { headers: { authorization: `Bearer ${token}` } })
       navigate("/")
       getTotalQuantityInCart(user.id)
+      getOrders(user.id)
       if (response.status === 400) {
         setResponse(response.data)
         setShowModal(true)
