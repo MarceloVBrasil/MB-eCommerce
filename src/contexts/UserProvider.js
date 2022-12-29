@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
     const [token, setToken] = useLocalStorage("token", "")
     const [user, setUser] = useLocalStorage("user", {})
     const [orders, setOrders] = useLocalStorage("myOrders", [])
-    const [tokenExpiresIn, setTokenExpiresIn] = useLocalStorage("tokenExpiresIn", undefined)
+    const [tokenExpiresIn, setTokenExpiresIn] = useLocalStorage("tokenExpiresIn", 0)
     const [isLoggedIn, setIsLoggedIn] = useState(token !== "")
     const [totalQuantityInCart, setTotalQuantityInCart] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
