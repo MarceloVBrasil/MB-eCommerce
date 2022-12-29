@@ -6,6 +6,8 @@ import ProductDetailsForm from '../../components/ProductDetailsForm'
 import "./ProductPage.scss"
 import CommentList from '../../components/CommentList'
 import Modal from '../../components/Modal'
+import { useUser } from '../../contexts/UserProvider'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProductPage() {
   document.title = "MB eCommerce | Product"
@@ -14,10 +16,13 @@ export default function ProductPage() {
   const [comments, setComments] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [response, setResponse] = useState("")
+  const { logsOutIfTokenHasExpired } = useUser()
+  const navigate = useNavigate()
 
     useEffect(() => {
       getProductDetails(productId)
       getComments(productId)
+      logsOutIfTokenHasExpired(navigate)
     }, [productId])
   
   return (

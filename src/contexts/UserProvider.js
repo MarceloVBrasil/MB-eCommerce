@@ -12,6 +12,7 @@ export function UserProvider({ children }) {
     const [token, setToken] = useLocalStorage("token", "")
     const [user, setUser] = useLocalStorage("user", {})
     const [orders, setOrders] = useLocalStorage("myOrders", [])
+    const [tokenExpiresIn, setTokenExpiresIn] = useLocalStorage("tokenExpiresIn", undefined)
     const [isLoggedIn, setIsLoggedIn] = useState(token !== "")
     const [totalQuantityInCart, setTotalQuantityInCart] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
@@ -21,12 +22,20 @@ export function UserProvider({ children }) {
     useEffect(() => {
         getTotalAmount(user.id)
     }, [])
+
+    function logsOutIfTokenHasExpired(redirectTo) {
+        if (Date.now() > tokenExpiresIn) {
+            logOut()
+            redirectTo("/login")
+        }
+    }
     
     function logIn(data) {
         const {token, ...user} = data
         setToken(token)
         setUser(user)
         setIsLoggedIn(true)
+        setTokenExpiresIn(Date.now() + 24 * 60 * 60 * 1000) // 24h
     }
 
     function logOut() {
@@ -34,6 +43,7 @@ export function UserProvider({ children }) {
         localStorage.removeItem("MBeCommerce-token")
         localStorage.removeItem("MBeCommerce-user")
         localStorage.removeItem("MBeCommerce-myOrders")
+        localStorage.removeItem("MBeCommerce-tokenExpiresIn")
     }
 
     async function getTotalQuantityInCart(userId) {
@@ -84,7 +94,8 @@ export function UserProvider({ children }) {
         setResponse,
         showModal,
         setShowModal,
-        getOrders
+        getOrders,
+        logsOutIfTokenHasExpired
     }
 
     return (

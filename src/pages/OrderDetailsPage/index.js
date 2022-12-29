@@ -6,16 +6,19 @@ import { useUser } from '../../contexts/UserProvider'
 import { CircularProgress } from '@mui/material'
 import axiosInstance from '../../utils/axiosInstance'
 import Modal from '../../components/Modal'
+import { useNavigate } from 'react-router-dom'
 
 export default function OrderDetailsPage() {
   const { orderId } = useParams()
-  const { user, token } = useUser()
+  const { user, token, logsOutIfTokenHasExpired } = useUser()
   const [order, setOrder] = useState(undefined)
   const [response, setResponse] = useState("")
   const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-      getOrderDetails(orderId)
+    getOrderDetails(orderId)
+    logsOutIfTokenHasExpired(navigate)
   }, [])
   
   if (!order?.[0].id) return <div className='cart-page'><CircularProgress /></div>

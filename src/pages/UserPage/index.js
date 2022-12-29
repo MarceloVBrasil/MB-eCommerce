@@ -5,12 +5,15 @@ import Modal from '../../components/Modal'
 import { useUser } from '../../contexts/UserProvider'
 import { CircularProgress } from '@mui/material'
 import EditUserMenu from '../../components/EditUserMenu'
+import { useNavigate } from 'react-router-dom'
 
 export default function UserPage() {
-    const { orders, showModal, setShowModal, response, getOrders, user } = useUser()
+    const { orders, showModal, setShowModal, response, getOrders, user, logsOutIfTokenHasExpired } = useUser()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getOrders(user.id)
+        logsOutIfTokenHasExpired(navigate)
     }, [])
     
     if(orders === undefined) return <div className='cart-page'><CircularProgress /></div>
