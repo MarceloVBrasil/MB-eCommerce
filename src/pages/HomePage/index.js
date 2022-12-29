@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Modal from "../../components/Modal";
 
 export default function HomePage() {
-  const {token, user, getTotalQuantityInCart, getOrders} = useUser()
+  const {token, user, getTotalQuantityInCart, getOrders, logsOutIfTokenHasExpired} = useUser()
   const [searchParams, setSearchParams] = useSearchParams()
   const sessionCheckoutId = searchParams.get("sessionId")
   const [paymentStatus, setPaymentStatus] = useState("")
@@ -24,6 +24,7 @@ export default function HomePage() {
     if(sessionCheckoutId)
     createNewPaymentOrder(sessionCheckoutId)
     getAllProducts()
+    logsOutIfTokenHasExpired(navigate)
   }, [])
   if(!products[0]) return <div className='cart-page'><CircularProgress /></div>
   document.title = "MB eCommerce | Home";
