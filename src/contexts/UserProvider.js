@@ -24,7 +24,7 @@ export function UserProvider({ children }) {
     }, [])
 
     function logsOutIfTokenHasExpired(redirectTo) {
-        if (Date.now() > tokenExpiresIn) {
+        if (Date.now() > tokenExpiresIn && isLoggedIn) {
             logOut()
             redirectTo("/login")
         }
