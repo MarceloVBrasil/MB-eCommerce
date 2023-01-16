@@ -18,6 +18,8 @@ export function UserProvider({ children }) {
     const [totalAmount, setTotalAmount] = useState(0)
     const [response, setResponse] = useState("")
     const [showModal, setShowModal] = useState(false)
+    const [totalQuantityUndeliveredOrders, setTotalQuantityUndeliveredOrders] = useState(0)
+    const [allOrders, setAllOrders] = useState([])
 
     useEffect(() => {
         getTotalAmount(user.id)
@@ -75,6 +77,28 @@ export function UserProvider({ children }) {
         }
     }
 
+    // admin
+    async function getTotalQuantityOfUndeliveredOrders() {
+        try {
+            const response = await axiosInstance.get(`orders/admin/${user.admin}`)
+            setTotalQuantityUndeliveredOrders(response.data)
+        } catch (error) {
+            setResponse(error.response.data)
+            setShowModal(true)
+        }
+    }
+
+    async function getAllOrders() {
+        try {
+            const response = await axiosInstance.get(`orders/admin/${user.admin}/orders`)
+            setAllOrders(response.data)
+        } catch (error) {
+            setResponse(error.response.data)
+            setShowModal(true)
+        }
+    }
+
+
     const userContextValue = {
         token,
         logIn,
@@ -95,7 +119,12 @@ export function UserProvider({ children }) {
         showModal,
         setShowModal,
         getOrders,
-        logsOutIfTokenHasExpired
+        logsOutIfTokenHasExpired,
+        getTotalQuantityOfUndeliveredOrders,
+        totalQuantityUndeliveredOrders,
+        setTotalQuantityUndeliveredOrders,
+        allOrders,
+        getAllOrders,
     }
 
     return (

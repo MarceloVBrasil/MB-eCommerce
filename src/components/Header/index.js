@@ -4,6 +4,7 @@ import logo from "../../assets/images/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import ShoppingCartIcon from "../ShoppingCartIcon";
 import { useUser } from "../../contexts/UserProvider";
+import BagIcon from "../BagIcon";
 
 export default function Header() {
   const { isLoggedIn, logOut, user } = useUser()
@@ -23,8 +24,8 @@ export default function Header() {
       {
         isLoggedIn &&
         <div className="header-links">
-            <ShoppingCartIcon />
-            <Link to={`/user/${user.id}`}><p className="header-links__link header-links__greeting">Welcome, {user?.name}!</p></Link>
+            {user.admin ?  <BagIcon /> : <ShoppingCartIcon /> }
+            <Link to={`${user.admin ? `/admin` : `/user/${user.id}`}`}><p className="header-links__link header-links__greeting">Welcome, {user?.name}!</p></Link>
             <Link to="/login"><p className="header-links__link" onClick={logOut}>Logout</p></Link>
           </div>
       }

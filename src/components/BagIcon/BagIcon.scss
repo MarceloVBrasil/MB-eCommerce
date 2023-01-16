@@ -1,0 +1,28 @@
+@use '../../styles/partials/colors' as *;
+
+.shopping-bag-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-right: 0.4rem;
+
+    &-bag {
+        color: $Gray;
+
+        &-quantity {
+            position: absolute;
+            bottom: -0.6rem;
+            right: -0.5rem;
+            width: 1.4rem;
+            height: 1.4rem;
+            background-color: red;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

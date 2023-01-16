@@ -19,6 +19,51 @@ export function validatePostalCode(postalCode) {
   return true;
 }
 
+export function validName(productName) {
+  if(isNumber(productName)) return false
+  if(!productName) return productName
+  return !containsSpecialCharacter(productName)
+}
+
+export function validDescription(productDescription) {
+  if(isNumber(productDescription)) return false
+  if(!productDescription) return false
+  return !containsSpecialCharacter(productDescription)
+}
+
+export function validBrandName(brandName) {
+  if(isNumber(brandName)) return false
+  if(!brandName) return false
+  return !containsSpecialCharacter(brandName)
+}
+
+export function validCategoryName(categoryName) {
+  if(isNumber(categoryName)) return false
+  if(!categoryName) return false
+  return !containsSpecialCharacter(categoryName)
+}
+
+export function validPrice(productPrice) {
+  if(!productPrice) return false 
+  return productPrice > 0
+}
+
+export function validQuantity(productQuantity) {
+  if(!productQuantity) return false 
+  return productQuantity > 0
+}
+
+export function validImageFile(file) {
+  if (!file) return false
+  const extension = getFileExtension(file.name)
+  return ["png", "webp", "jpeg", "jpg"].includes(extension)
+}
+
+function containsSpecialCharacter(text) {
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  return specialChars.test(text)
+}
+
 function validSeparateCharacter(c) {
   return c === " " || c === "-";
 }
@@ -41,4 +86,13 @@ function oddDigitsAreNumbers(str) {
 
 function isLetter(c) {
   return c.toLowerCase() !== c.toUpperCase();
+}
+
+function getFileExtension(filename) {
+    if (!filename) return "";
+    return filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+  }
+
+function isNumber(text) {
+  return !isNaN(text)
 }

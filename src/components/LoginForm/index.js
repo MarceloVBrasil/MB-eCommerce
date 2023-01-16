@@ -60,7 +60,7 @@ export default function LoginForm() {
     function handleEnterPress(e) {
         if (e.key === "Enter") {
             e.preventDefault()
-            handleSubmit(formRef)
+            handleSubmit(e)
         }
     }
 }

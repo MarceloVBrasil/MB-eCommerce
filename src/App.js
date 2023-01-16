@@ -11,6 +11,9 @@ import UserPage from "./pages/UserPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import EditUserPage from "./pages/EditUserPage";
+import AdminPage from "./pages/AdminPage";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
+import NewProductPage from "./pages/NewProductPage";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/orders" element={<AdminOrdersPage />} />
+          <Route path="/admin/newProduct" element={ <NewProductPage />} />
           <Route path="/:productId" element={<ProductPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
