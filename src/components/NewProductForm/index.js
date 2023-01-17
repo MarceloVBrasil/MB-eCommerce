@@ -39,7 +39,7 @@ export default function NewProductForm() {
                       label={"price"}
                       type={"text"}
                       error={error.price}
-                      placeholder={'¢10,000'}
+                      placeholder={'$1000'}
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                     />
