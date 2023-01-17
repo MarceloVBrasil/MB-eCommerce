@@ -63,12 +63,14 @@ export default function NewProductForm() {
                       label={"brand name"}
                       type={"text"}
                       name={'brand'}
+                      placeholder={'Brand Name'}
                       error={error.brand}
                   />
                   <Input
                       label={"category name"}
                       type={"text"}
                       name={'category'}
+                      placeholder={'Category Name'}
                       error={error.category}
                     />
                 </section>
