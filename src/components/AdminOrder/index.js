@@ -51,7 +51,7 @@ export default function AdminOrder({ order }) {
 
     async function sendOrder(id) {
       try {
-        const response = await axiosInstance.post('/orders/admin/send', { orderId: id, userId: user.id })
+        const response = await axiosInstance.post('/orders/admin/send', { orderId: id })
         if (response.status === 200) {
           setTotalQuantityUndeliveredOrders(prev => prev > 1 ? prev -1 : prev)
         }
