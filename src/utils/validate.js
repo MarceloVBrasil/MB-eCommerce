@@ -22,13 +22,13 @@ export function validatePostalCode(postalCode) {
 export function validName(productName) {
   if(isNumber(productName)) return false
   if(!productName) return productName
-  return !containsSpecialCharacter(productName)
+  return true
 }
 
 export function validDescription(productDescription) {
   if(isNumber(productDescription)) return false
   if(!productDescription) return false
-  return !containsSpecialCharacter(productDescription)
+  return true
 }
 
 export function validBrandName(brandName) {
@@ -44,6 +44,7 @@ export function validCategoryName(categoryName) {
 }
 
 export function validPrice(productPrice) {
+  productPrice = productPrice.charAt(0) === "$" ? productPrice.slice(1) : productPrice
   if(!productPrice) return false 
   return productPrice > 0
 }

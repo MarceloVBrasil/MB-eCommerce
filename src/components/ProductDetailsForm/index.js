@@ -14,38 +14,38 @@ export default function ProductDetailsForm({ product }) {
   const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
 
-  if(!product.categoryName) return <div className='cart-page'><CircularProgress /></div>
+  if (!product.categoryName) return <div className='cart-page'><CircularProgress /></div>
   return (
     <>
-    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
-    <form className='product-details-info' onSubmit={handleSubmit}>
+      <Modal show={showModal} message={response} setShowModal={setShowModal} />
+      <form className='product-details-info' onSubmit={handleSubmit}>
         <section className='product-details-info-section'>
-              <p className='product-details-info-section__title'>{product.name}</p>
-              <img src={product.image} alt={product.name} />
-      </section>
-          <section className='product-details-info-section'>
-            <p className='product-details-info-section__title'>description</p>
-        <p className='product-details-info-section__description'>{product.description}</p>
+          <p className='product-details-info-section__title'>{product.name}</p>
+          <img src={product.image} alt={product.name} />
+        </section>
+        <section className='product-details-info-section'>
+          <p className='product-details-info-section__title'>description</p>
+          <p className='product-details-info-section__description'>{product.description}</p>
         
-        <div className="product-details-info-section-container">
-          <div className="product-details-info-section-container-group">
-            <label className="product-details-info-section-container-group__title">Brand</label>
-            <p className='product-details-info-section-container-group__description'>{product.brandName}</p>
+          <div className="product-details-info-section-container">
+            <div className="product-details-info-section-container-group">
+              <label className="product-details-info-section-container-group__title">Brand</label>
+              <p className='product-details-info-section-container-group__description'>{product.brandName}</p>
+            </div>
+            <div className="product-details-info-section-container-group">
+              <label className="product-details-info-section-container-group__title">Category</label>
+              <p className='product-details-info-section-container-group__description'>{product.categoryName}</p>
+            </div>
           </div>
-          <div className="product-details-info-section-container-group">
-            <label className="product-details-info-section-container-group__title">Category</label>
-            <p className='product-details-info-section-container-group__description'>{product.categoryName}</p>
-          </div>
-        </div>
-      </section>
+        </section>
         <div className="product-details-info-buttons">
-            <Button text={"+ Add to Cart"} type={"submit"} />
+          {user.admin ? <Button text={"Edit Product"} type={"submit"} /> : <Button text={"+ Add to Cart"} type={"submit"} />}
         </div>
         {error && (
-        <p className="product-details-info__error">
-          <span>!</span> must be logged in to purchase
-        </p>
-      )}
+          <p className="product-details-info__error">
+            <span>!</span> must be logged in to purchase
+          </p>
+        )}
       </form>
       
     </>
@@ -53,6 +53,15 @@ export default function ProductDetailsForm({ product }) {
   
   async function handleSubmit(e) {
     e.preventDefault()
+    if (user.admin) return handleAdminSubmit()
+    else handleClientSubmit()
+  }
+
+  function handleAdminSubmit() {
+    navigate(`/admin/editProduct/${product.id}`)
+  }
+
+  async function handleClientSubmit() {
     try {
       if (!isLoggedIn) return setError(true)
       setError(false)

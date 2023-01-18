@@ -5,7 +5,7 @@ export default function Comment({comment}) {
   return (
     <article className='comment'>
           <div className='comment-section'>
-              <p className='comment-section__author'>{comment.name}</p>
+              <p className='comment-section__author'>{comment.admin ? 'Admin' : comment.name}</p>
               <p className='comment-section__date'>{formatTimestamp(comment.timestamp)}</p>
           </div>
           <div className='comment-section'>

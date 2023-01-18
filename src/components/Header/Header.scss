@@ -30,6 +30,7 @@
 
         &__greeting {
             color: $GreenishBlue;
+            text-transform: capitalize;
         }
     }
 }

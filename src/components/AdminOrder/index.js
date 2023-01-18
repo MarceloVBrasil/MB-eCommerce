@@ -53,7 +53,7 @@ export default function AdminOrder({ order }) {
       try {
         const response = await axiosInstance.post('/orders/admin/send', { orderId: id })
         if (response.status === 200) {
-          setTotalQuantityUndeliveredOrders(prev => prev > 1 ? prev -1 : prev)
+          setTotalQuantityUndeliveredOrders(prev => prev > 0 ? prev -1 : prev)
         }
         navigate("/admin")
       } catch (error) {

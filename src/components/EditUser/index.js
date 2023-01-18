@@ -10,13 +10,14 @@ import Modal from "../Modal";
 import { useUser } from "../../contexts/UserProvider";
 
 export default function EditUser() {
+  const { user, setUser, token } = useUser()
+  const [userToEdit, setUserToEdit] = useState(user)
   const [error, setError] = useState({});
   const formRef = useRef()
   const [response, setResponse] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [navigateValue, setNavigateValue] = useState()
-    const navigate = useNavigate()
-    const {user, setUser, token} = useUser()
+  const navigate = useNavigate()
   return (
     <>
       <Modal show={showModal} message={response} setShowModal={setShowModal} navigateValue={navigateValue} />
@@ -28,7 +29,8 @@ export default function EditUser() {
         placeholder={"name"}
         type={"text"}
         error={error.name}
-        value={user.name}
+          value={userToEdit.name}
+          onChange={(e) => handleChange({name: e.target.value})}
         />
         <Input
           label={"password"}
@@ -41,7 +43,8 @@ export default function EditUser() {
           placeholder={"email"}
           type={"text"}
           error={error.email}
-          value={user.email}
+            value={userToEdit.email}
+             onChange={(e) => handleChange({email: e.target.value})}
           />
       </section>
       <section className="edit-user-section">
@@ -51,24 +54,34 @@ export default function EditUser() {
           placeholder={"street"}
           type={"text"}
           error={error.street}
-          value={user.street}
+            value={userToEdit.street}
+             onChange={(e) => handleChange({street: e.target.value})}
           />
         <Input
           label={"city"}
           placeholder={"city"}
           type={"text"}
           error={error.city}
-          value={user.city}
+            value={userToEdit.city}
+             onChange={(e) => handleChange({city: e.target.value})}
           />
-          <DropDownMenu error={error.province} selected={user.province} />
-          <Input label={"complement"} placeholder={"complement"} type={"text"} value={user.complement} />
+          <DropDownMenu error={error.province} selected={userToEdit.province} />
+          <Input
+            label={"complement"}
+            placeholder={"complement"}
+            type={"text"}
+            value={userToEdit.complement}
+            onChange={(e) => handleChange({ complement: e.target.value })}
+          />
+
         <Input
           label={"postal code"}
           placeholder={"A0B 1C2"}
           type={"text"}
           name="postalCode"
           error={error.postalCode}
-          value={user.postalCode}
+            value={userToEdit.postalCode}
+             onChange={(e) => handleChange({postalCode: e.target.value})}
           />
       </section>
       <div className="edit-user-buttons">
@@ -135,4 +148,10 @@ export default function EditUser() {
        setShowModal(true)
     }
   }
+
+   function handleChange(changes) {
+        setUserToEdit(prev => {
+            return {...prev, ...changes}
+        })
+    }
 }
