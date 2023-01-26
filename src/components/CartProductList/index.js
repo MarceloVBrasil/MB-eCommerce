@@ -20,19 +20,24 @@ export default function CartProductList() {
           <Modal show={showModal} message={response} setShowModal={setShowModal}/>
           {products?.map(product => {
               if (product.quantity > 0) 
-                  return <CartProduct key={product.product_id} productId={product.product_id} quantity={product.quantity} />
+                  return <CartProduct key={product.productId} productId={product.productId} quantity={product.quantity} />
           })}
     </div>
     )
     
     async function getQuantityPerProductInCart(userId) {
         try {
-            let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
-            const cartId = response.data.id
-            response = await axiosInstance.get(`/purchase/quantityPerProduct/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
-            setProducts(response.data)
+            // let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } });
+            // const cartId = response.data.id
+            // response = await axiosInstance.get(`/purchase/quantityPerProduct/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
+            // setProducts(response.data)
+            const response = await axiosInstance.get(`/carts/${userId}`)
+            if (response.status === 200) {
+                const products = response.data
+                setProducts(products)
+            }
         } catch (error) {
-            setResponse(error.response.data)
+            setResponse(error.response.data.message.message)
             setShowModal(true)
         }
     }

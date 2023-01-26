@@ -47,7 +47,8 @@ export default function HomePage() {
   async function createNewPaymentOrder(sessionId) {
     try {
       setPaymentStatus("pending")
-      const response = await axiosInstance.get(`/orders?sessionId=${sessionId}&userId=${user.id}`, { headers: { authorization: `Bearer ${token}` } })
+      //const response = await axiosInstance.get(`/orders?sessionId=${sessionId}&userId=${user.id}`, { headers: { authorization: `Bearer ${token}` } })
+      const response = await axiosInstance.post(`/orders?sessionId=${sessionId}`)
       navigate("/")
       getTotalQuantityInCart(user.id)
       getOrders(user.id)

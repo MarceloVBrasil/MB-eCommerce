@@ -47,7 +47,7 @@ export default function LoginForm() {
         if (Object.values(errors).some((value) => value !== undefined)) return setErrors(errors)
         const user = {email: formRef.current.email.value, password: formRef.current.password.value}
         try {
-            const response = await axiosInstance.post("/login", user)
+            const response = await axiosInstance.post("/users/login", user)
             logIn(response.data)            
             navigate("/")
 

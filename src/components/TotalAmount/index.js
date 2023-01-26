@@ -28,15 +28,17 @@ export default function TotalAmount() {
   async function handlePayment() {
     if(totalAmount === 0) return setError("Cart is empty")
     try {
-      const response = await axiosInstance.post("/purchase/payment", {
-        amount: totalAmount,
-        quantity: totalQuantityInCart,
-        name: `${user.name}'s cart`,
-        userId: user.id
-    }, { headers: { authorization: `Bearer ${token}` } })
+    //   const response = await axiosInstance.post(`/purchase`, {
+    //     amount: totalAmount,
+    //     quantity: totalQuantityInCart,
+    //     name: `${user.name}'s cart`,
+    //     userId: user.id
+    // }, { headers: { authorization: `Bearer ${token}` } })
+    const response = await axiosInstance.post(`/purchase/${user.id}`, {amount: totalAmount})
   
       window.location.href = response.data.url
     } catch (error) {
+      console.log(error)
       setResponse(error.response.data)
       setShowModal(true)
     }

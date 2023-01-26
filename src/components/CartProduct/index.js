@@ -30,7 +30,7 @@ export default function CartProduct({ productId, quantity }) {
             <p className='cart-product-section__description'>{ totalQuantityOfProductInCart }</p>
           </section>
         <div className="cart-product-buttons">
-                    <Button text={"remove"} type={"cancel"} onClick={() => handleUpdateCart(-1)} disable={totalQuantityOfProductInCart === 0} />
+              <Button text={"remove"} type={"cancel"} onClick={() => handleUpdateCart(-1)} disable={totalQuantityOfProductInCart === 0} />
               <Button text={"+ Add to Cart"} type={"submit"} onClick={() => handleUpdateCart(1)} />
         </div>
     </div>
@@ -59,9 +59,10 @@ export default function CartProduct({ productId, quantity }) {
             setTotalQuantityOfProductInCart(prev => prev - 1 >= 0 ? prev - 1 : prev)
         }
         try {
-            let response = await axiosInstance.get(`/carts/${user.id}`, { headers: { authorization: `Bearer ${token}` } })
-            const cartId = response.data.id
-            response = await axiosInstance.put(`/purchase/${product.id}`, { cartId, increment }, { headers: { authorization: `Bearer ${token}` } })
+            // let response = await axiosInstance.get(`/carts/${user.id}`, { headers: { authorization: `Bearer ${token}` } })
+            // const cartId = response.data.id
+            // response = await axiosInstance.put(`/purchase/${product.id}`, { cartId, increment }, { headers: { authorization: `Bearer ${token}` } })
+            const response = await axiosInstance.put(`/carts/${user.id}`, {productId, increasedBy: variation})
         } catch (error) {
             setResponse(error.response.data)
             setShowModal(true)

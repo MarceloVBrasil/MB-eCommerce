@@ -49,22 +49,32 @@ export function UserProvider({ children }) {
     }
 
     async function getTotalQuantityInCart(userId) {
-        let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
-        const cartId = response.data.id
+        // let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } });
+        // const cartId = response.data.id
 
-        if (!cartId) return setTotalQuantityInCart(0)
-        response = await axiosInstance.get(`/purchase/totalQuantity/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
-        if(!response.data) return setTotalQuantityInCart(0)
-        return setTotalQuantityInCart(response.data)
+        // if (!cartId) return setTotalQuantityInCart(0)
+        // response = await axiosInstance.get(`/purchase/totalQuantity/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
+        // if(!response.data) return setTotalQuantityInCart(0)
+        // return setTotalQuantityInCart(response.data)
+        const response = await axiosInstance.get(`/carts/${userId}`)
+        const products = response.data
+        if (!products) return setTotalQuantityInCart(0)
+        const productsQuantity = products.reduce((total, product) => total + product.quantity, 0)
+        setTotalQuantityInCart(productsQuantity)
     }
 
     async function getTotalAmount(userId) {
-        let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
-        const cartId = response.data.id
+        // let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } });
+        // const cartId = response.data.id
 
-        if (!cartId) return setTotalAmount(0)
-        response = await axiosInstance.get(`/purchase/get/amount/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
-        return setTotalAmount(response.data)
+        // if (!cartId) return setTotalAmount(0)
+        // response = await axiosInstance.get(`/purchase/get/amount/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
+        // return setTotalAmount(response.data)
+        const response = await axiosInstance.get(`/carts/${userId}`)
+        const products = response.data
+        if (!products) return setTotalAmount(0)
+        const totalAmount = products.reduce((total, product) => total + product.price * product.quantity, 0)
+        setTotalAmount(totalAmount)
     }
 
     async function getOrders(userId) {
