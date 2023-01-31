@@ -23,6 +23,9 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         getTotalAmount(user.id)
+        if (user.admin) {
+            getAllOrders()
+        }
     }, [])
 
     function logsOutIfTokenHasExpired(redirectTo) {
@@ -35,7 +38,7 @@ export function UserProvider({ children }) {
     function logIn(data) {
         const {token, ...user} = data
         setToken(token)
-        setUser(user)
+        getUserContactInfo(user.id)
         setIsLoggedIn(true)
         setTokenExpiresIn(Date.now() + 24 * 60 * 60 * 1000) // 24h
     }
@@ -79,7 +82,7 @@ export function UserProvider({ children }) {
 
     async function getOrders(userId) {
         try {
-            const response = await axiosInstance.get(`orders/${userId}`, { headers: { authorization: `Bearer ${token}` } })
+            const response = await axiosInstance.get(`/orders/${userId}`, { headers: { authorization: `Bearer ${token}` } })
             setOrders(response.data)
         } catch (error) {
             setResponse(error.response.data)
@@ -87,10 +90,20 @@ export function UserProvider({ children }) {
         }
     }
 
+    async function getUserContactInfo(id) {
+        try {
+            const response = await axiosInstance.get(`/users/${id}`)
+            const user = response.data
+            setUser(user)
+        } catch (error) {
+            return 
+        }
+    }
+
     // admin
     async function getTotalQuantityOfUndeliveredOrders() {
         try {
-            const response = await axiosInstance.get(`orders/admin/${user.admin}`)
+            const response = await axiosInstance.get(`/orders/admin/${user.admin}`)
             setTotalQuantityUndeliveredOrders(response.data)
         } catch (error) {
             setResponse(error.response.data)
@@ -100,8 +113,13 @@ export function UserProvider({ children }) {
 
     async function getAllOrders() {
         try {
-            const response = await axiosInstance.get(`orders/admin/${user.admin}/orders`)
-            setAllOrders(response.data)
+            const response = await axiosInstance.get(`/orders/admin`)
+            if (response.status === 200) {
+                const allOrders = response.data
+                const undeliveredOrders = allOrders.filter(order => !order.sent_date)
+                setAllOrders(allOrders)
+                setTotalQuantityUndeliveredOrders(undeliveredOrders.length)
+            }
         } catch (error) {
             setResponse(error.response.data)
             setShowModal(true)

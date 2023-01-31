@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import { useUser } from '../../contexts/UserProvider'
 import AdminOrderArray from '../../components/AdminOrderArray'
 import "./AdminOrdersPage.scss"
+import EmptyCart from '../../components/EmptyCart'
 
 export default function AdminOrdersPage() {
     const { allOrders, getAllOrders } = useUser()
@@ -10,7 +11,7 @@ export default function AdminOrdersPage() {
         }, [])
   return (
     <div className='admin-orders-page'>
-          <AdminOrderArray orders={allOrders} />
+      {allOrders.length > 0 ? <AdminOrderArray orders={allOrders}/> : <EmptyCart />}
     </div>
   )
 }

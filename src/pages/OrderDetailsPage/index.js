@@ -21,7 +21,7 @@ export default function OrderDetailsPage() {
     logsOutIfTokenHasExpired(navigate)
   }, [])
   
-  if (!order?.[0].id) return <div className='cart-page'><CircularProgress /></div>
+  if (!order?.id) return <div className='cart-page'><CircularProgress /></div>
 
   return (
     <div className='order-details-page'>
@@ -32,7 +32,8 @@ export default function OrderDetailsPage() {
 
   async function getOrderDetails(orderId) {
       try {
-          const response = await axiosInstance.get(`carts/${user.id}/${orderId}`, { headers: { authorization: `Bearer ${token}` } })
+        const response = await axiosInstance.get(`/orders/${user.id}/${orderId}`, { headers: { authorization: `Bearer ${token}` } })
+        console.log(response.data)
           setOrder(response.data)
       } catch (error) {
           setResponse(error.response.data)

@@ -5,11 +5,12 @@ import { priceTag } from '../../utils/priceTag';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
 
-export default function Order({order}) {
+export default function Order({ order }) {
+  console.log(order)
   return (
     <div className='order'>
         <section className='order-section'>
-        <p className='order-section__title'>{`Order #${order.orderId}`}</p>
+        <p className='order-section__title'>{`Order #${order.id}`}</p>
               <img src={shoppingBag} alt="orders"  className="order-section__image"/>
       </section>
       <section className='order-section'>
@@ -20,7 +21,7 @@ export default function Order({order}) {
         <div className='order-section-group-flex'>
           <div className='order-section-group'>
             <p className='order-section__title'>Date</p>
-            <p className='order-section__description'>{convertTimeStampToDate(order.orderDate)}</p>
+            <p className='order-section__description'>{convertTimeStampToDate(order.order_date)}</p>
           </div>
           <div className='order-section-group'>
             <p className='order-section__title'>Status</p>
@@ -32,7 +33,7 @@ export default function Order({order}) {
           </div>            
           </section>
         <div className="order-buttons">
-        <Link to={`./${order.orderId}`} className="order-buttons__link"><Button text={"Details"} type={"submit"} /></Link>
+        <Link to={`./${order.id}`} className="order-buttons__link"><Button text={"Details"} type={"submit"} /></Link>
         </div>
     </div>
   )

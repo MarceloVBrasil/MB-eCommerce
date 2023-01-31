@@ -6,11 +6,8 @@ import { useEffect } from "react";
 
 
 export default function BagIcon() {
-    const { isLoggedIn, totalQuantityUndeliveredOrders, getTotalQuantityOfUndeliveredOrders, user } = useUser()
+    const { isLoggedIn, totalQuantityUndeliveredOrders, user } = useUser()
 
-    useEffect(() => {
-        getTotalQuantityOfUndeliveredOrders()
-    }, [])
     return (
         <Link to={isLoggedIn ? user.admin ? "/admin/orders" : "/cart" : "/login"}>
             <div className="shopping-bag-icon">

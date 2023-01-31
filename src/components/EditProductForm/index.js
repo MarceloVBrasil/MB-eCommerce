@@ -70,7 +70,7 @@ export default function EditProductForm({product}) {
                       name={'brand'}
                       placeholder={'Brand Name'}
                       error={error.brand}
-                      value={productToEdit.brandName}
+                      value={productToEdit.brand}
                       onChange={(e) => handleChange({brandName: e.target.value})}
                   />
                   <Input
@@ -79,7 +79,7 @@ export default function EditProductForm({product}) {
                       name={'category'}
                       placeholder={'Category Name'}
                       error={error.category}
-                      value={productToEdit.categoryName}
+                      value={productToEdit.category}
                       onChange={(e) => handleChange({categoryName: e.target.value})}
                     />
                 </section>
@@ -116,14 +116,14 @@ export default function EditProductForm({product}) {
             quantity: formRef.current.quantity.value,
             brand: formRef.current.brand.value,
             category: formRef.current.category.value,
-            file: productToEdit.file
+            image: productToEdit.file
         }
 
         try {
-            const response = await axiosInstance.put(`/products/admin`, editedProduct, {
+            const response = await axiosInstance.put(`/products/${product.id}`, editedProduct, {
                 headers: {"content-type": "multipart/form-data"}
             });
-            setResponse(response.data)
+            setResponse(response.data.message)
             setShowModal(true)
             setNavigateValue("/")
 

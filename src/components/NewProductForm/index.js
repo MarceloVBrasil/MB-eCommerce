@@ -106,14 +106,13 @@ export default function NewProductForm() {
             quantity: formRef.current.quantity.value,
             brand: formRef.current.brand.value,
             category: formRef.current.category.value,
-            file: imageFile
+            image: imageFile
         }
-
         try {
-            const response = await axiosInstance.post(`/products/admin`, newProduct, {
+            const response = await axiosInstance.post(`/products`, newProduct, {
                 headers: {"content-type": "multipart/form-data"}
             });
-            setResponse(response.data)
+            setResponse(response.data.message)
             setShowModal(true)
             setNavigateValue("/")
 

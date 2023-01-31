@@ -9,6 +9,7 @@ export default function AdminPage() {
     useEffect(() => {
         getAllOrders()
     }, [])
+  
   return (
     <div className='admin-page'>
       <AdminOrderMenu orders={allOrders} />

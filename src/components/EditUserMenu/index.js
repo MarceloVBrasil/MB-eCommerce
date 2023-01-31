@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useUser } from '../../contexts/UserProvider'
 
 export default function EditUserMenu() {
-    const { user } = useUser()
+  const { user } = useUser()
   return (
     <div className='edit-user-menu'>
         <section className='edit-user-menu-section'>

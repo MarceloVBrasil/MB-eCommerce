@@ -1,7 +1,8 @@
 import React from 'react'
 import "./Comment.scss"
 
-export default function Comment({comment}) {
+export default function Comment({ comment }) {
+    console.log(comment)
   return (
     <article className='comment'>
           <div className='comment-section'>

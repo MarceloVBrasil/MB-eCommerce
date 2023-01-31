@@ -6,7 +6,7 @@ import { useUser } from '../../contexts/UserProvider'
 import axiosInstance from "../../utils/axiosInstance"
 import Modal from '../Modal'
 
-export default function CommentsForm({ productId, setComments, getComments }) {
+export default function CommentsForm({ productId, setComments }) {
   const {isLoggedIn, user, token} = useUser()
   const [error, setError] = useState({})
   const [message, setMessage] = useState("")
@@ -41,10 +41,13 @@ export default function CommentsForm({ productId, setComments, getComments }) {
       const response = await axiosInstance.post(`/comments/${productId}`, { message: e.target.comment.value, userId: user.id }, {
         headers: {authorization: `Bearer ${token}`}
       })
-      getComments(productId)
+      if (response.status === 200) {
+        const comment = response.data
+        setComments(prev => [{name: user.name, productId, ...comment}, ...prev])
+      }
       setMessage("")
     } catch (error) {
-      setResponse(error.response.data)
+      setResponse(error.response.data.message.message)
       setShowModal(true)
     }
   }

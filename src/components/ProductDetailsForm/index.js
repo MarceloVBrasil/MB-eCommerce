@@ -103,6 +103,7 @@ export default function ProductDetailsForm({ product }) {
       
       //navigate("/cart")
     } catch (error) {
+      console.log(error)
       setTotalQuantityInCart(prev => prev - 1) 
       setTotalAmount(prev => prev - product.price) 
       setResponse(error.response.data.message.message)

@@ -52,7 +52,8 @@ export default function LoginForm() {
             navigate("/")
 
         } catch (error) {
-            setResponse(error.response.data)
+            console.log(error)
+            setResponse(error.response.data.message)
             setShowModal(true)
         }
     }
