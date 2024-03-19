@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Modal from "../../components/Modal";
 
 export default function HomePage() {
-  const {token, user, getTotalQuantityInCart, getOrders, logsOutIfTokenHasExpired} = useUser()
+  const { token, user, getTotalQuantityInCart, getOrders, logsOutIfTokenHasExpired } = useUser()
   const [searchParams, setSearchParams] = useSearchParams()
   const sessionCheckoutId = searchParams.get("sessionId")
   const [paymentStatus, setPaymentStatus] = useState("")
@@ -21,16 +21,16 @@ export default function HomePage() {
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    if(sessionCheckoutId)
-    createNewPaymentOrder(sessionCheckoutId)
+    if (sessionCheckoutId)
+      createNewPaymentOrder(sessionCheckoutId)
     getAllProducts()
     logsOutIfTokenHasExpired(navigate)
   }, [])
-  if(!products[0]) return <div className='cart-page'><CircularProgress /></div>
+  if (!products[0]) return <div className='cart-page'><CircularProgress /></div>
   document.title = "MB eCommerce | Home";
   return (
     <div className="homepage">
-    <Modal show={showModal} message={response} setShowModal={setShowModal}/>
+      <Modal show={showModal} message={response} setShowModal={setShowModal} />
       {paymentStatus === "pending" && <div className="homepage-payment-success homepage-payment-pending">
         <PendingIcon className="homepage-payment-success__icon" />
         <p className="homepage-payment-success__text">Order Pending</p>
@@ -40,7 +40,7 @@ export default function HomePage() {
         <CheckCircleOutlineIcon className="homepage-payment-success__icon" />
         <p className="homepage-payment-success__text">Order Received</p>
       </div>}
-      <ProductList products={products}/>
+      <ProductList products={products} />
     </div>
   );
 
@@ -65,7 +65,7 @@ export default function HomePage() {
 
   async function getAllProducts() {
     try {
-      const response = await axiosInstance.get("/products");
+      const response = await axiosInstance.get("/products", { headers: { authorization: `Bearer ${token}` } });
       setProducts(response.data);
     } catch (error) {
       setResponse(error.response.data)

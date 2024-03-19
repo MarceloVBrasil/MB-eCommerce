@@ -12,24 +12,25 @@ export default function CartProductList() {
     const { user, token, totalQuantityInCart } = useUser()
 
     useEffect(() => {
-        getQuantityPerProductInCart(user.id)
+        getQuantityPerProductInCart()
     }, [totalQuantityInCart])
 
-  return (
-      <div className='cart-product-list'>
-          <Modal show={showModal} message={response} setShowModal={setShowModal}/>
-          {products?.map(product => {
-              if (product.quantity > 0) 
-                  return <CartProduct key={product.product_id} productId={product.product_id} quantity={product.quantity} />
-          })}
-    </div>
+    return (
+        <div className='cart-product-list'>
+            <Modal show={showModal} message={response} setShowModal={setShowModal} />
+            {products?.map(product => {
+                if (product.quantity > 0)
+                    return <CartProduct key={product.product_id} productId={product.product_id} quantity={product.quantity} />
+            })}
+        </div>
     )
-    
-    async function getQuantityPerProductInCart(userId) {
+
+    async function getQuantityPerProductInCart() {
         try {
-            let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
+            let response = await axiosInstance.get(`/carts/open`, { headers: { authorization: `Bearer ${token}` } });
             const cartId = response.data.id
             response = await axiosInstance.get(`/purchase/quantityPerProduct/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
+            console.log("Cart Product List: ", response.data)
             setProducts(response.data)
         } catch (error) {
             setResponse(error.response.data)

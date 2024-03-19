@@ -14,7 +14,7 @@ export default function ProductDetailsForm({ product }) {
   const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
 
-  if (!product.categoryName) return <div className='cart-page'><CircularProgress /></div>
+  if (!product.category) return <div className='cart-page'><CircularProgress /></div>
   return (
     <>
       <Modal show={showModal} message={response} setShowModal={setShowModal} />
@@ -26,15 +26,15 @@ export default function ProductDetailsForm({ product }) {
         <section className='product-details-info-section'>
           <p className='product-details-info-section__title'>description</p>
           <p className='product-details-info-section__description'>{product.description}</p>
-        
+
           <div className="product-details-info-section-container">
             <div className="product-details-info-section-container-group">
               <label className="product-details-info-section-container-group__title">Brand</label>
-              <p className='product-details-info-section-container-group__description'>{product.brandName}</p>
+              <p className='product-details-info-section-container-group__description'>{product.brand}</p>
             </div>
             <div className="product-details-info-section-container-group">
               <label className="product-details-info-section-container-group__title">Category</label>
-              <p className='product-details-info-section-container-group__description'>{product.categoryName}</p>
+              <p className='product-details-info-section-container-group__description'>{product.category}</p>
             </div>
           </div>
         </section>
@@ -47,10 +47,10 @@ export default function ProductDetailsForm({ product }) {
           </p>
         )}
       </form>
-      
+
     </>
   )
-  
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (user.admin) return handleAdminSubmit()
@@ -65,38 +65,38 @@ export default function ProductDetailsForm({ product }) {
     try {
       if (!isLoggedIn) return setError(true)
       setError(false)
-      let response = await axiosInstance.get(`/carts/${user.id}`, { headers: { authorization: `Bearer ${token}` } })
+      let response = await axiosInstance.get(`/carts`, { headers: { authorization: `Bearer ${token}` } })
       let cartId = response.data.id
 
       if (!cartId) {
         setTotalQuantityInCart(prev => prev + 1)
         setTotalAmount(prev => prev + product.price)
-           response = await axiosInstance.post("/carts", { userId: user.id }, {headers: {authorization: `Bearer ${token}`}})
-           cartId = response.data
-         await axiosInstance.post(`/purchase/${product.id}`, { cartId }, { headers: { authorization: `Bearer ${token}` } })
-         navigate("/cart")
+        response = await axiosInstance.post(`/carts`, { productId: product.id }, { headers: { authorization: `Bearer ${token}` } })
+        cartId = response.data
+        await axiosInstance.post(`/purchase/${product.id}`, { cartId }, { headers: { authorization: `Bearer ${token}` } })
+        navigate("/cart")
         return
-      } 
+      }
 
       response = await axiosInstance.get(`/purchase/check/${cartId}/${product.id}`, { headers: { authorization: `Bearer ${token}` } })
       const isProductInThisCart = response.data
 
       if (isProductInThisCart) {
         setTotalQuantityInCart(prev => prev + 1)
-        setTotalAmount(prev => prev + product.price) 
+        setTotalAmount(prev => prev + product.price)
         await axiosInstance.put(`/purchase/${product.id}`, { cartId, increment: true }, { headers: { authorization: `Bearer ${token}` } })
-         navigate("/cart")
-        return 
+        navigate("/cart")
+        return
       }
 
-      setTotalQuantityInCart(prev => prev + 1) 
-      setTotalAmount(prev => prev + product.price) 
+      setTotalQuantityInCart(prev => prev + 1)
+      setTotalAmount(prev => prev + product.price)
       await axiosInstance.post(`/purchase/${product.id}`, { cartId }, { headers: { authorization: `Bearer ${token}` } })
-      
+
       navigate("/cart")
     } catch (error) {
-      setTotalQuantityInCart(prev => prev - 1) 
-      setTotalAmount(prev => prev - product.price) 
+      setTotalQuantityInCart(prev => prev - 1)
+      setTotalAmount(prev => prev - product.price)
       setResponse(error.response.data)
       setShowModal(true)
     }

@@ -18,58 +18,58 @@ export default function RegisterForm() {
   return (
     <>
       <Modal show={showModal} message={response} setShowModal={setShowModal} navigateValue={navigateValue} />
-    <form className="register-form" onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
-      <section className="register-form-section">
-        <p className="register-form-section__title">user information</p>
-        <Input
-          label={"name"}
-          placeholder={"name"}
-          type={"text"}
-          error={error.name}
-        />
-        <Input
-          label={"password"}
-          placeholder={"password"}
-          type={"password"}
-          error={error.password}
+      <form className="register-form" onSubmit={handleSubmit} onKeyDown={handleEnterPress} ref={formRef}>
+        <section className="register-form-section">
+          <p className="register-form-section__title">user information</p>
+          <Input
+            label={"name"}
+            placeholder={"name"}
+            type={"text"}
+            error={error.name}
           />
-        <Input
-          label={"email"}
-          placeholder={"email"}
-          type={"text"}
-          error={error.email}
+          <Input
+            label={"password"}
+            placeholder={"password"}
+            type={"password"}
+            error={error.password}
           />
-      </section>
-      <section className="register-form-section">
-        <p className="register-form-section__title">address information</p>
-        <Input
-          label={"street"}
-          placeholder={"street"}
-          type={"text"}
-          error={error.street}
+          <Input
+            label={"email"}
+            placeholder={"email"}
+            type={"text"}
+            error={error.email}
           />
-        <Input
-          label={"city"}
-          placeholder={"city"}
-          type={"text"}
-          error={error.city}
+        </section>
+        <section className="register-form-section">
+          <p className="register-form-section__title">address information</p>
+          <Input
+            label={"street"}
+            placeholder={"street"}
+            type={"text"}
+            error={error.street}
           />
-        <DropDownMenu error={error.province} />
-        <Input label={"complement"} placeholder={"complement"} type={"text"} />
-        <Input
-          label={"postal code"}
-          placeholder={"A0B 1C2"}
-          type={"text"}
-          name="postalCode"
-          error={error.postalCode}
+          <Input
+            label={"city"}
+            placeholder={"city"}
+            type={"text"}
+            error={error.city}
           />
-      </section>
-      <div className="register-form-buttons">
-        <Button type={"cancel"} text={"cancel"} onClick={handleCancelButton} />
-        <Button text={"register"} type={"submit"} />
-      </div>
-    </form>
-  </>
+          <DropDownMenu error={error.province} />
+          <Input label={"complement"} placeholder={"complement"} type={"text"} />
+          <Input
+            label={"postal code"}
+            placeholder={"A0B 1C2"}
+            type={"text"}
+            name="postalCode"
+            error={error.postalCode}
+          />
+        </section>
+        <div className="register-form-buttons">
+          <Button type={"cancel"} text={"cancel"} onClick={handleCancelButton} />
+          <Button text={"register"} type={"submit"} />
+        </div>
+      </form>
+    </>
   );
 
   function handleCancelButton(e) {
@@ -114,7 +114,7 @@ export default function RegisterForm() {
     };
 
     try {
-      const response = await axiosInstance.post("/register", newUser);
+      const response = await axiosInstance.post("/auth/register", newUser);
       if (response.status === 400) {
         setResponse(response.data)
         setShowModal(true)
@@ -123,8 +123,8 @@ export default function RegisterForm() {
       setResponse("User Added Successfully :)")
       setShowModal(true)
     } catch (error) {
-       setResponse(error.response.data);
-       setShowModal(true)
+      setResponse(error.response.data);
+      setShowModal(true)
     }
   }
 }

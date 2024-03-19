@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import axiosInstance from "../utils/axiosInstance";
 
@@ -26,18 +26,18 @@ export function UserProvider({ children }) {
     }, [])
 
     function logsOutIfTokenHasExpired(redirectTo) {
-        if (Date.now() > tokenExpiresIn && isLoggedIn) {
+        if (!token) {
             logOut()
             redirectTo("/login")
         }
     }
-    
+
     function logIn(data) {
-        const {token, ...user} = data
-        setToken(token)
-        setUser(user)
+        const { token, ...user } = data
+        setToken(data)
+        // setUser(user)
         setIsLoggedIn(true)
-        setTokenExpiresIn(Date.now() + 24 * 60 * 60 * 1000) // 24h
+        // setTokenExpiresIn(Date.now() + 24 * 60 * 60 * 1000) // 24h
     }
 
     function logOut() {
@@ -48,18 +48,18 @@ export function UserProvider({ children }) {
         localStorage.removeItem("MBeCommerce-tokenExpiresIn")
     }
 
-    async function getTotalQuantityInCart(userId) {
-        let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
+    async function getTotalQuantityInCart() {
+        let response = await axiosInstance.get(`/carts`, { headers: { authorization: `Bearer ${token}` } });
         const cartId = response.data.id
 
         if (!cartId) return setTotalQuantityInCart(0)
         response = await axiosInstance.get(`/purchase/totalQuantity/${cartId}`, { headers: { authorization: `Bearer ${token}` } })
-        if(!response.data) return setTotalQuantityInCart(0)
+        if (!response.data) return setTotalQuantityInCart(0)
         return setTotalQuantityInCart(response.data)
     }
 
-    async function getTotalAmount(userId) {
-        let response = await axiosInstance.get(`/carts/${userId}`, { headers: { authorization: `Bearer ${token}` } }); 
+    async function getTotalAmount() {
+        let response = await axiosInstance.get(`/carts`, { headers: { authorization: `Bearer ${token}` } });
         const cartId = response.data.id
 
         if (!cartId) return setTotalAmount(0)
